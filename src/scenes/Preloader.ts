@@ -13,13 +13,22 @@ export default class Preloader extends Phaser.Scene
         this.load.tilemapTiledJSON('dungeon1', 'tiles/dungeon01.json');
 
         this.load.spritesheet('duckie', 'character/duckie.png', {
-            frameWidth: 48,
-            frameHeight: 48
+            frameWidth: 32,
+            frameHeight: 32
         });
-
+        this.load.spritesheet('bot', 'enemies/bot.png', {
+            frameWidth: 32,
+            frameHeight: 32
+        });
+        this.load.spritesheet('heart', 'hearts/heart.png', {
+            frameWidth: 32,
+            frameHeight: 32
+        });
     }
     create()
     {
+
+        //Below are all the animations for the duck player character
         this.anims.create({
             key: "duck_idleDown",
             frames: this.anims.generateFrameNames('duckie', {start:4, end:4}),
@@ -57,6 +66,27 @@ export default class Preloader extends Phaser.Scene
             repeat: -1
         }); 
 
+        //Below is the animations for the robot enemy
+        this.anims.create({
+            key: "bot_move",
+            frames: this.anims.generateFrameNames('bot'),
+            frameRate: 10,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: "heart_live",
+            frames: this.anims.generateFrameNames('bot',{start:0, end:0}),
+            frameRate: 0,
+            repeat: -1
+        });
+        this.anims.create({
+            key: "heart_empty",
+            frames: this.anims.generateFrameNames('bot',{start:1, end:1}),
+            frameRate: 0,
+            repeat: -1
+        });
+        
 
         this.scene.start('game1'); 
     }
