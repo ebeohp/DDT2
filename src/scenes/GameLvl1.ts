@@ -16,7 +16,20 @@ export default class GameLvl1 extends Phaser.Scene
     private botGroup!: Phaser.Physics.Arcade.Group
     private bot1!: Phaser.Physics.Arcade.Sprite
     private numHearts = 3;
+    private numStars = 3;
+
     private botCollider!: Phaser.Physics.Arcade.Collider
+    private spacebar!: Phaser.Input.Keyboard.Key;
+    
+    private treeGroup!: Phaser.Physics.Arcade.Group;
+    private tree1!: Phaser.Physics.Arcade.Group;
+    private treeCollider!: Phaser.Physics.Arcade.Collider;
+    private treeTrigger!: Phaser.Physics.Arcade.Collider;
+    private treeTrigGroup!: Phaser.Physics.Arcade.Group;
+    trig1: any;
+    starGroup: Phaser.Physics.Arcade.Group;
+    starText: Phaser.GameObjects.BitmapText;
+
 
 	constructor()
 	{
@@ -50,32 +63,98 @@ export default class GameLvl1 extends Phaser.Scene
         })*/
 
         this.duckie = this.physics.add.sprite(128,128, 'duckie', 4);
-        
+        var name = this.add.bitmapText(15,7, "pixelFont", "DUCKIE", 16);
+        name.setScrollFactor(0,0);
+        this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        this.myCam = this.cameras.main.startFollow(this.duckie, true);
 
         this.physics.add.collider(this.duckie, wallsLayer);
         
         this.botGroup = this.physics.add.group();
         this.bot1 = this.botGroup.create(200,128,'bot');
-        this.bot1.anims.play('bot_move', true).setImmovable(true);
+        this.bot1.anims.play('bot_move', true);
+        this.bot1.setImmovable(true);
         this.botCollider = this.physics.add.collider(this.duckie, this.botGroup, this.hurtDuckie, null, this);
 
-        this.myCam = this.cameras.main.startFollow(this.duckie, true);
 
+        //Graphics for lives system and groups hearts 
         this.heartGroup = this.physics.add.group();
-        this.heart1 = this.heartGroup.create(30, 20, "heart",0);
+        this.heart1 = this.heartGroup.create(30, 30, "heart",0);
         this.heart1.setScrollFactor(0,0);
-        this.heart2 = this.heartGroup.create(60, 20, "heart",0);
+        this.heart2 = this.heartGroup.create(60, 30, "heart",0);
         this.heart2.setScrollFactor(0,0);
-        this.heart3 = this.heartGroup.create(90, 20, "heart",0);
+        this.heart3 = this.heartGroup.create(90, 30, "heart",0);
         this.heart3.setScrollFactor(0,0);
-        console.log("Hey" + this.numHearts);
-       
+        
+        //Graphics for trees and groups all trees //Each tree has their own trigger
+        this.treeGroup = this.physics.add.group();
+        this.tree1 = this.treeGroup.create(200,200,'stump');
+        this.tree1.body.setSize(20,20);
+        this.tree1.setOffset(15,20);
+        this.tree1.setImmovable(true);
 
+        this.treeCollider = this.physics.add.collider(this.duckie, this.treeGroup);
+        this.treeTrigGroup = this.physics.add.group(); //This is to set an invisible area around the tree to sense for space bar input that can fix the tree
+        this.trig1 = this.treeTrigGroup.create(200,200, 'trigger');
+        this.treeTrigger = this.physics.add.overlap(this.duckie, this.treeTrigGroup, this.fixTree, null, this);
+
+
+        this.numStars = 0; //Counts number collected in this level
+        this.starText = this.add.bitmapText(150,7, "pixelFont", "       X 0", 14); //Text to tell user how many stars they counted
+        var fakeStar = this.add.sprite(155,12,'star',1);
+        this.starText.setScrollFactor(0,0);
+        fakeStar.setScrollFactor(0,0);
+        this.starGroup = this.physics.add.group();
+        this.star1 = this.starGroup.create(500,200, 'star');
+        this.star1.anims.play('star_spin');
+        
+        this.physics.add.collider(this.duckie, this.starGroup, this.collectStar, null, this);
+
+
+    }
+    collectStar(duck, star)
+    {
+        star.disableBody(true,false);
+        this.numStars += 1;
+        this.starText.text = "       X " + this.numStars;
+
+        this.tweens.add({
+            targets: star,
+            alpha: { from: 1, to: 0 },
+            repeat: 0,
+            y: '-=100',
+            ease: 'Linear',
+            duration: 1000,
+            onComplete: function(){
+                this.numStars += 1;
+                console.log("Collected!");
+                star.disableBody(true,true);
+            }
+        });
+    }
+    fixTree(duck, tree)
+    {
+        if(Phaser.Input.Keyboard.JustDown(this.spacebar))
+        {
+            tree.setTexture('tree');
+            tree.setOrigin(0.5,0.66);
+        }
     }
     hurtDuckie(duck,bot)
     {
-        duck.setPosition(128,128); //Return to spawn
-        //Add tweens later for flickering effect
+        duck.setPosition(128,128); //Respawn at start
+    
+        var tween = this.tweens.add({ //Tweens for flickering effect when respawning
+            targets: duck,
+            alpha: 0,
+            ease: "Power1",
+            duration: 100,
+            repeat: 3,
+            onComplete: function(){
+                duck.alpha = 1;
+            },
+            callbackScope: this
+        });
         this.numHearts -= 1;
         var once = 0;
         
@@ -93,6 +172,8 @@ export default class GameLvl1 extends Phaser.Scene
         if(this.numHearts == 0 && once!=1)
         {
             this.heart3.setFrame(1);
+            
+            //Make a try again? button show up
             once+=1;
         }
     
@@ -135,5 +216,11 @@ export default class GameLvl1 extends Phaser.Scene
             this.duckie.anims.play('duck_idleDown',true);
             this.duckie.setVelocity(0,0);
         }
+        if(this.numHearts == 0)
+        {
+            this.duckie.anims.play("duck_cry", true);
+            this.duckie.disableBody(true,false);
+        }        
+        
     }
 }

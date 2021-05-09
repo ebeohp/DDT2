@@ -8,6 +8,39 @@ export default class Preloader extends Phaser.Scene
     }
     preload()
     {
+        //For the progress bar
+        var progressBar = this.add.graphics();
+        var progressBox = this.add.graphics();
+        progressBox.fillStyle(0x222222, 0.8);
+        progressBox.fillRect(140, 270, 320, 50);
+        
+        this.load.bitmapFont("pixelFont", "font/font.png", "font/font.xml");
+        
+        //this.load.image("logo", logo);
+        
+        let percText = this.add.text(300, 300, "0%", {
+            font: "40px",
+        }).setOrigin(0.5);
+        let loadingText = this.add.text(300, 200, "Loading...", {
+            font: "40px",
+        }).setOrigin(0.5);
+
+        this.load.on("progress", function (perc) {
+        percText.setText(perc * 100 + "%");
+        loadingText.setText();
+        progressBar.clear();
+        progressBar.fillStyle(0xffffff, 1);
+        progressBar.fillRect(150, 280, 300 * perc, 30);
+
+        });
+        this.load.on("complete", function () {
+        loadingText.destroy();
+        progressBar.destroy();
+        progressBox.destroy();
+        
+        });
+
+        //Game Assets below:
         this.load.image('wallTiles', 'tiles/dungeon_tiles.png');
         this.load.image('grassTiles', 'tiles/grass_tiles.png');
         this.load.tilemapTiledJSON('dungeon1', 'tiles/dungeon01.json');
@@ -24,6 +57,14 @@ export default class Preloader extends Phaser.Scene
             frameWidth: 32,
             frameHeight: 32
         });
+        this.load.spritesheet('star', 'items/star.png', {
+            frameWidth: 16,
+            frameHeight: 16
+        });
+
+        this.load.image('stump', 'trees/stump.png');
+        this.load.image('tree', 'trees/tree.png');
+        this.load.image('trigger', 'trees/trigger.png');
     }
     create()
     {
@@ -84,6 +125,13 @@ export default class Preloader extends Phaser.Scene
             key: "heart_empty",
             frames: this.anims.generateFrameNames('bot',{start:1, end:1}),
             frameRate: 0,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: "star_spin",
+            frames: this.anims.generateFrameNames('star',{frames: [1,5,9,13,17,21]}),
+            frameRate: 10,
             repeat: -1
         });
         
