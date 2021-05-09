@@ -40,7 +40,7 @@
          "imageheight":512,
          "imagewidth":512,
          "margin":0,
-         "name":"0x72_DungeonTilesetII_v1.3",
+         "name":"dungeon",
          "spacing":0,
          "tilecount":1024,
          "tileheight":16,
@@ -50,8 +50,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -59,8 +59,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -68,8 +68,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -77,8 +77,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -86,8 +86,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -95,8 +95,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -104,8 +104,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -113,8 +113,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -122,8 +122,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -131,8 +131,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -140,8 +140,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -149,8 +149,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -158,8 +158,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -167,8 +167,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -176,8 +176,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -185,8 +185,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -194,8 +194,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -203,8 +203,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -212,8 +212,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -221,8 +221,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -230,8 +230,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -239,8 +239,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -248,8 +248,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -257,8 +257,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -266,8 +266,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -275,8 +275,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -284,8 +284,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -293,8 +293,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -302,8 +302,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -311,8 +311,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -320,8 +320,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -329,8 +329,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -338,8 +338,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -347,8 +347,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -356,8 +356,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -365,8 +365,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -374,8 +374,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -383,8 +383,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -392,8 +392,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -401,8 +401,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -410,8 +410,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -419,8 +419,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -428,8 +428,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -437,8 +437,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -446,8 +446,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -455,8 +455,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -464,8 +464,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -473,8 +473,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -482,8 +482,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -491,8 +491,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -500,8 +500,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -509,8 +509,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -518,8 +518,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -527,8 +527,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -536,8 +536,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -545,8 +545,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -554,8 +554,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -563,8 +563,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -572,8 +572,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -581,8 +581,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -590,8 +590,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -599,8 +599,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -608,8 +608,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -617,8 +617,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -626,8 +626,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -635,8 +635,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -644,8 +644,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -653,8 +653,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -662,8 +662,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -671,8 +671,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -680,8 +680,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -689,8 +689,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -698,8 +698,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -707,8 +707,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -716,8 +716,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -725,8 +725,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -734,8 +734,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -743,8 +743,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -752,8 +752,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -761,8 +761,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -770,8 +770,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -779,8 +779,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -788,8 +788,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -797,8 +797,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -806,8 +806,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -815,8 +815,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -824,8 +824,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -833,8 +833,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -842,8 +842,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -851,8 +851,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -860,8 +860,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -869,8 +869,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -878,8 +878,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -887,8 +887,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -896,8 +896,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -905,8 +905,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -914,8 +914,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -923,8 +923,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -932,8 +932,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -941,8 +941,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -950,8 +950,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -959,8 +959,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -968,8 +968,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -977,8 +977,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -986,8 +986,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -995,8 +995,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -1004,8 +1004,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -1013,8 +1013,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -1022,8 +1022,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -1031,8 +1031,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -1040,8 +1040,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
@@ -1049,8 +1049,8 @@
                  "properties":[
                         {
                          "name":"collides",
-                         "type":"string",
-                         "value":"true"
+                         "type":"bool",
+                         "value":true
                         }]
                 }, 
                 {
