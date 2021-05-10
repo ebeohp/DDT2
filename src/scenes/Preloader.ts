@@ -26,17 +26,17 @@ export default class Preloader extends Phaser.Scene
         }).setOrigin(0.5);
 
         this.load.on("progress", function (perc) {
-        percText.setText(perc * 100 + "%");
-        loadingText.setText();
-        progressBar.clear();
-        progressBar.fillStyle(0xffffff, 1);
-        progressBar.fillRect(150, 280, 300 * perc, 30);
+            percText.setText(perc * 100 + "%");
+            loadingText.setText();
+            progressBar.clear();
+            progressBar.fillStyle(0xffffff, 1);
+            progressBar.fillRect(150, 280, 300 * perc, 30);
 
         });
         this.load.on("complete", function () {
-        loadingText.destroy();
-        progressBar.destroy();
-        progressBox.destroy();
+            loadingText.destroy();
+            progressBar.destroy();
+            progressBox.destroy();
         
         });
 
@@ -60,6 +60,10 @@ export default class Preloader extends Phaser.Scene
         this.load.spritesheet('star', 'items/star.png', {
             frameWidth: 16,
             frameHeight: 16
+        });
+        this.load.spritesheet('chest', 'items/chest.png', {
+            frameWidth: 32,
+            frameHeight: 32
         });
 
         this.load.image('stump', 'trees/stump.png');
@@ -133,6 +137,13 @@ export default class Preloader extends Phaser.Scene
             frames: this.anims.generateFrameNames('star',{frames: [1,5,9,13,17,21]}),
             frameRate: 10,
             repeat: -1
+        });
+        
+        this.anims.create({
+            key: "chest_open",
+            frames: this.anims.generateFrameNames('chest', {start:1, end:1}),
+            frameRate: 0,
+            repeat: 0
         });
         
 

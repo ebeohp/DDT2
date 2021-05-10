@@ -1,6 +1,27 @@
 import Phaser from 'phaser'
 import { textChangeRangeIsUnchanged } from 'typescript';
 
+class ListNode
+{
+    public data: string
+    public next!: any
+    constructor(data, next)
+    {
+        this.data = data
+        this.next = null
+    }
+}
+class LinkedList{
+    public head!: ListNode
+    constructor(head = null)
+    {
+        this.head = head 
+    }
+    removeHead()
+    {
+        this.head = this.head.next
+    }
+}
 export default class GameLvl1 extends Phaser.Scene
 {
     private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
@@ -26,9 +47,16 @@ export default class GameLvl1 extends Phaser.Scene
     private treeCollider!: Phaser.Physics.Arcade.Collider;
     private treeTrigger!: Phaser.Physics.Arcade.Collider;
     private treeTrigGroup!: Phaser.Physics.Arcade.Group;
-    trig1: any;
+
     starGroup: Phaser.Physics.Arcade.Group;
     starText: Phaser.GameObjects.BitmapText;
+    chestCollider: Phaser.Physics.Arcade.Collider;
+    chestGroup: Phaser.Physics.Arcade.Group;
+    chestTrigger: Phaser.Physics.Arcade.Collider;
+    chestTrigGroup: Phaser.Physics.Arcade.Group;
+
+    
+    list: LinkedList;
 
 
 	constructor()
@@ -80,11 +108,11 @@ export default class GameLvl1 extends Phaser.Scene
         //Graphics for lives system and groups hearts 
         this.heartGroup = this.physics.add.group();
         this.heart1 = this.heartGroup.create(30, 30, "heart",0);
-        this.heart1.setScrollFactor(0,0);
+        this.heart1.setScrollFactor(0,0).setDepth(10);
         this.heart2 = this.heartGroup.create(60, 30, "heart",0);
-        this.heart2.setScrollFactor(0,0);
+        this.heart2.setScrollFactor(0,0).setDepth(10);
         this.heart3 = this.heartGroup.create(90, 30, "heart",0);
-        this.heart3.setScrollFactor(0,0);
+        this.heart3.setScrollFactor(0,0).setDepth(10);
         
         //Graphics for trees and groups all trees //Each tree has their own trigger
         this.treeGroup = this.physics.add.group();
@@ -94,23 +122,66 @@ export default class GameLvl1 extends Phaser.Scene
         this.tree1.setImmovable(true);
 
         this.treeCollider = this.physics.add.collider(this.duckie, this.treeGroup);
+        
         this.treeTrigGroup = this.physics.add.group(); //This is to set an invisible area around the tree to sense for space bar input that can fix the tree
-        this.trig1 = this.treeTrigGroup.create(200,200, 'trigger');
+        this.tTrig1 = this.treeTrigGroup.create(200,200, 'trigger');
         this.treeTrigger = this.physics.add.overlap(this.duckie, this.treeTrigGroup, this.fixTree, null, this);
 
-
+        //Graphics for stars and star mechanics
         this.numStars = 0; //Counts number collected in this level
         this.starText = this.add.bitmapText(150,7, "pixelFont", "       X 0", 14); //Text to tell user how many stars they counted
         var fakeStar = this.add.sprite(155,12,'star',1);
-        this.starText.setScrollFactor(0,0);
-        fakeStar.setScrollFactor(0,0);
+        this.starText.setScrollFactor(0,0).setDepth(10);;
+        fakeStar.setScrollFactor(0,0).setDepth(10);;
+
         this.starGroup = this.physics.add.group();
-        this.star1 = this.starGroup.create(500,200, 'star');
+        this.star1 = this.starGroup.create(50,200, 'star');
         this.star1.anims.play('star_spin');
         
         this.physics.add.collider(this.duckie, this.starGroup, this.collectStar, null, this);
 
+        //Graphics for chest and chest mechanics
+        this.chestGroup = this.physics.add.group();
+        this.chest1 = this.chestGroup.create(50,100, 'chest', 0);
+        this.chest1.setImmovable(true);
 
+        this.chestCollider = this.physics.add.collider(this.duckie, this.chestGroup);
+
+        this.chestTrigGroup = this.physics.add.group(); //This is to set an invisible area around the tree to sense for space bar input that can fix the tree
+        this.cTrig1 = this.chestTrigGroup.create(50,100, 'trigger');
+
+        this.chestTrigger = this.physics.add.overlap(this.duckie, this.chestTrigGroup, this.openChest, null, this);
+
+        //Linked list implementation below
+        /*this.factList = {
+            head: {
+                value: "blah blah",
+                next:{
+                    value: "bb",
+                    next:{
+                        value: "bbb",
+                        next: null
+                    }
+                }
+            }
+        };*/
+        var node1 = new ListNode("Blah", null)
+        var node2 = new ListNode("Blahblah", null)
+        node1.next = node2;
+
+        this.list = new LinkedList(node1);
+        console.log(this.list.head.next.data);
+
+    }
+    openChest(duck, chest)
+    {
+        if(Phaser.Input.Keyboard.JustDown(this.spacebar))
+        {
+            chest.anims.play('chest_open');
+            //operate the popup here
+            this.add.bitmapText(15,100, "pixelFont", this.list.head.data, 16);
+            this.list.removeHead();
+        }
     }
     collectStar(duck, star)
     {
