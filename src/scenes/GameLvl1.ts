@@ -178,10 +178,36 @@ export default class GameLvl1 extends Phaser.Scene
         if(Phaser.Input.Keyboard.JustDown(this.spacebar))
         {
             chest.anims.play('chest_open');
+            chest.disableBody(true,false);
             //operate the popup here
-            this.add.bitmapText(15,100, "pixelFont", this.list.head.data, 16);
-            this.list.removeHead();
+            duck.disableBody(true,false); //No moving allowed when popup is open
+            var window = this.add.image(chest.x,chest.y,'window');
+            window.setScale(0.1).setAlpha(0).setDepth(20);
+
+            this.tweens.add({
+                targets: window,
+                alpha: { from: 0, to: 1 },
+                repeat: 0,
+                x: duck.x,
+                y: duck.y,
+                scaleX: 0.75,
+                scaleY: 0.5,
+                ease: 'Linear',
+                duration: 200,
+                onComplete: function(){
+                    this.displayFact(duck.x, duck.y);
+                    duck.disableBody(false,false);
+                },
+                callbackScope: this
+            }); 
+            
         }
+    }
+    displayFact(x, y)
+    {
+        this.add.bitmapText(10,40, "pixelFont", this.list.head.data, 60); //Need a black font
+        
+        this.list.removeHead();
     }
     collectStar(duck, star)
     {

@@ -69,6 +69,12 @@ export default class Preloader extends Phaser.Scene
         this.load.image('stump', 'trees/stump.png');
         this.load.image('tree', 'trees/tree.png');
         this.load.image('trigger', 'trees/trigger.png');
+
+        this.load.spritesheet('closeButton', 'popup/closeButton.png', {
+            frameWidth: 160,
+            frameHeight: 160
+        });
+        this.load.image('window', 'popup/popupWindow.png');
     }
     create()
     {
@@ -146,6 +152,18 @@ export default class Preloader extends Phaser.Scene
             repeat: 0
         });
         
+        this.anims.create({
+            key: "close_button_shine",
+            frames: this.anims.generateFrameNames('closeButton', {start:0, end:8}),
+            frameRate: 10,
+            repeat: 0
+        });
+        this.anims.create({
+            key: "close_button_clicked",
+            frames: this.anims.generateFrameNames('closeButton', {start:9, end:9}),
+            frameRate: 0,
+            repeat: 0
+        });
 
         this.scene.start('game1'); 
     }
