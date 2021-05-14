@@ -62,7 +62,7 @@ export default class GameLvl1 extends Phaser.Scene
 
 	constructor()
 	{
-		super('game1')
+		super('game2')
 	}
 
 	preload()
@@ -72,7 +72,7 @@ export default class GameLvl1 extends Phaser.Scene
 
     create()
     {
-        const map = this.make.tilemap({key: 'dungeon1'});
+        const map = this.make.tilemap({key: 'dungeon2'});
         const tileset1 = map.addTilesetImage('dungeon', 'wallTiles');
         const tileset2 = map.addTilesetImage('green', 'grassTiles');
 
@@ -121,41 +121,11 @@ export default class GameLvl1 extends Phaser.Scene
         tree1.body.setSize(20,20);
         tree1.setOffset(15,20);
         tree1.setImmovable(true);
-        var tree2 = this.treeGroup.create(470,200,'stump');
-        tree2.body.setSize(20,20);
-        tree2.setOffset(15,20);
-        tree2.setImmovable(true);
-        var tree3 = this.treeGroup.create(700,100,'stump');
-        tree3.body.setSize(20,20);
-        tree3.setOffset(15,20);
-        tree3.setImmovable(true);
-        var tree4 = this.treeGroup.create(650,500,'stump');
-        tree4.body.setSize(20,20);
-        tree4.setOffset(15,20);
-        tree4.setImmovable(true);
-        var tree5 = this.treeGroup.create(160,400,'stump');
-        tree5.body.setSize(20,20);
-        tree5.setOffset(15,20);
-        tree5.setImmovable(true);
-        var tree6 = this.treeGroup.create(130,700,'stump');
-        tree6.body.setSize(20,20);
-        tree6.setOffset(15,20);
-        tree6.setImmovable(true);
-        var tree7 = this.treeGroup.create(700,650,'stump');
-        tree7.body.setSize(20,20);
-        tree7.setOffset(15,20);
-        tree7.setImmovable(true);
 
         this.treeCollider = this.physics.add.collider(this.duckie, this.treeGroup);
         
         this.treeTrigGroup = this.physics.add.group(); //This is to set an invisible area around the tree to sense for space bar input that can fix the tree
         var tTrig1 = this.treeTrigGroup.create(120,230, 'trigger');
-        var tTrig2 = this.treeTrigGroup.create(470,200, 'trigger');
-        var tTrig3 = this.treeTrigGroup.create(700,100, 'trigger');
-        var tTrig4 = this.treeTrigGroup.create(650,500, 'trigger');
-        var tTrig5 = this.treeTrigGroup.create(160,400, 'trigger');
-        var tTrig6 = this.treeTrigGroup.create(130,700, 'trigger');
-        var tTrig7 = this.treeTrigGroup.create(700,650, 'trigger');
         
         this.treeTrigger = this.physics.add.overlap(this.duckie, this.treeTrigGroup, this.fixTree, null, this);
 
@@ -178,25 +148,20 @@ export default class GameLvl1 extends Phaser.Scene
         this.chestGroup = this.physics.add.group();
         var chest1 = this.chestGroup.create(180,60, 'chest', 0);
         chest1.setImmovable(true);
-        var chest2 = this.chestGroup.create(300,300, 'chest', 0);
-        chest2.setImmovable(true);
-        var chest3 = this.chestGroup.create(770,430, 'chest', 0);
-        chest3.setImmovable(true);
+
 
         this.chestCollider = this.physics.add.collider(this.duckie, this.chestGroup);
 
         this.chestTrigGroup = this.physics.add.group(); //This is to set an invisible area around the tree to sense for space bar input that can fix the tree
         var cTrig1 = this.chestTrigGroup.create(180,60, 'trigger');
-        var cTrig2 = this.chestTrigGroup.create(300,300, 'trigger');
-        var cTrig3 = this.chestTrigGroup.create(770,430, 'trigger');
 
         this.chestTrigger = this.physics.add.overlap(this.duckie, this.chestTrigGroup, this.openChest, null, this);
 
-        //Linked list construction below with queue linking 
-        var node1 = new ListNode("Trees help save energy! \n Trees properly placed around buildings can reduce air conditioning needs by 30% \n and can save 20–50% in energy used for heating.", null)
-        var node2 = new ListNode("Trees help reduce climate change effects! \n In one year, an acre of mature trees absorbs the amount of CO2 produced by a car driven 26,000 miles.", null)
+        //Linked list construction below with queue linking NEED NEW FACST
+        var node1 = new ListNode("", null)
+        var node2 = new ListNode("", null)
         node1.next = node2;
-        var node3 = new ListNode("Trees help clean our drinking water! \n Forested watersheds provide quality drinking water to more than 180 million Americans.", null)
+        var node3 = new ListNode("", null)
         node2.next = node3;
 
         this.list = new LinkedList(node1);

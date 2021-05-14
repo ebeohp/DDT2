@@ -62,7 +62,7 @@ export default class GameLvl1 extends Phaser.Scene
 
 	constructor()
 	{
-		super('game1')
+		super('game3')
 	}
 
 	preload()
@@ -72,7 +72,7 @@ export default class GameLvl1 extends Phaser.Scene
 
     create()
     {
-        const map = this.make.tilemap({key: 'dungeon1'});
+        const map = this.make.tilemap({key: 'dungeon3'});
         const tileset1 = map.addTilesetImage('dungeon', 'wallTiles');
         const tileset2 = map.addTilesetImage('green', 'grassTiles');
 

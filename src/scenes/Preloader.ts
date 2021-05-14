@@ -44,6 +44,8 @@ export default class Preloader extends Phaser.Scene
         this.load.image('wallTiles', 'tiles/dungeon_tiles.png');
         this.load.image('grassTiles', 'tiles/grass_tiles.png');
         this.load.tilemapTiledJSON('dungeon1', 'tiles/dungeon01.json');
+        this.load.tilemapTiledJSON('dungeon2', 'tiles/dungeon02.json');
+        this.load.tilemapTiledJSON('dungeon3', 'tiles/dungeon03.json');
 
         this.load.spritesheet('duckie', 'character/duckie.png', {
             frameWidth: 32,
@@ -154,18 +156,18 @@ export default class Preloader extends Phaser.Scene
         
         this.anims.create({
             key: "close_button_shine",
-            frames: this.anims.generateFrameNames('closeButton', {start:0, end:8}),
-            frameRate: 10,
+            frames: this.anims.generateFrameNames('closeButton', {start:0, end:7}),
+            frameRate: 15,
             repeat: 0
         });
         this.anims.create({
             key: "close_button_clicked",
-            frames: this.anims.generateFrameNames('closeButton', {start:9, end:9}),
+            frames: this.anims.generateFrameNames('closeButton', {start:8, end:8}),
             frameRate: 0,
             repeat: 0
         });
 
-        this.scene.start('game1'); 
+        this.scene.start('game2'); 
     }
 
 }
