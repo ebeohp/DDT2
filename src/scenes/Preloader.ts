@@ -11,33 +11,29 @@ export default class Preloader extends Phaser.Scene
         //For the progress bar
         var progressBar = this.add.graphics();
         var progressBox = this.add.graphics();
-        progressBox.fillStyle(0x222222, 0.8);
-        progressBox.fillRect(140, 270, 320, 50);
+        progressBox.fillStyle(0xff0000, 0.8);
+        progressBox.fillRect(45, 180, 320, 30);
         
         this.load.bitmapFont("pixelFont", "font/font.png", "font/font.xml");
         
-        //this.load.image("logo", logo);
         
-        let percText = this.add.text(300, 300, "0%", {
-            font: "40px",
+        let percText = this.add.text(200, 195, "0%", {
+            font: "15px",
         }).setOrigin(0.5);
-        let loadingText = this.add.text(300, 200, "Loading...", {
-            font: "40px",
+        let loadingText = this.add.text(200, 50, "Loading...", {
+            font: "15px",
         }).setOrigin(0.5);
 
         this.load.on("progress", function (perc) {
             percText.setText(perc * 100 + "%");
-            loadingText.setText();
+            loadingText.setText('Loading...');
             progressBar.clear();
             progressBar.fillStyle(0xffffff, 1);
-            progressBar.fillRect(150, 280, 300 * perc, 30);
+            progressBar.fillRect(55, 185, 300 * perc, 20);
 
         });
         this.load.on("complete", function () {
             loadingText.destroy();
-            progressBar.destroy();
-            progressBox.destroy();
-        
         });
 
         //Game Assets below:
@@ -77,10 +73,20 @@ export default class Preloader extends Phaser.Scene
             frameHeight: 160
         });
         this.load.image('window', 'popup/popupWindow.png');
+
+        this.load.spritesheet('title', 'decoration/title.png', {
+            frameWidth: 320,
+            frameHeight: 320
+        });
     }
     create()
     {
-
+        this.anims.create({
+            key: "title_anim",
+            frames: this.anims.generateFrameNames('title'),
+            frameRate: 10,
+            repeat: -1
+        });
         //Below are all the animations for the duck player character
         this.anims.create({
             key: "duck_idleDown",
@@ -167,7 +173,7 @@ export default class Preloader extends Phaser.Scene
             repeat: 0
         });
 
-        this.scene.start('game2'); 
+        this.scene.start('title'); 
     }
 
 }

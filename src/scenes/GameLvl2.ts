@@ -28,9 +28,9 @@ export default class GameLvl1 extends Phaser.Scene
     private duckie!: Phaser.Physics.Arcade.Sprite
 
     private heartGroup!: Phaser.Physics.Arcade.Group
-    private heart1!: Phaser.Physics.Arcade.Group
-    private heart2!: Phaser.Physics.Arcade.Group
-    private heart3!: Phaser.Physics.Arcade.Group
+    private heart1!: Phaser.Physics.Arcade.Sprite
+    private heart2!: Phaser.Physics.Arcade.Sprite
+    private heart3!: Phaser.Physics.Arcade.Sprite
     
     private myCam!: Phaser.Cameras.Scene2D.Camera
 
@@ -91,7 +91,7 @@ export default class GameLvl1 extends Phaser.Scene
             faceColor: new Phaser.Display.Color(48,49,47,255),
         })*/
 
-        this.duckie = this.physics.add.sprite(100,100, 'duckie', 4);
+        this.duckie = this.physics.add.sprite(80,680, 'duckie', 4);
         var name = this.add.bitmapText(15,7, "pixelFont", "DUCKIE", 16);
         name.setScrollFactor(0,0);
         this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -117,15 +117,45 @@ export default class GameLvl1 extends Phaser.Scene
         
         //Graphics for trees and groups all trees //Each tree has their own trigger
         this.treeGroup = this.physics.add.group();
-        var tree1 = this.treeGroup.create(120,230,'stump');
+        var tree1 = this.treeGroup.create(130,210,'stump');
         tree1.body.setSize(20,20);
         tree1.setOffset(15,20);
         tree1.setImmovable(true);
+        var tree2 = this.treeGroup.create(280,130,'stump');
+        tree2.body.setSize(20,20);
+        tree2.setOffset(15,20);
+        tree2.setImmovable(true);
+        var tree3 = this.treeGroup.create(400,250,'stump');
+        tree3.body.setSize(20,20);
+        tree3.setOffset(15,20);
+        tree3.setImmovable(true);
+        var tree4 = this.treeGroup.create(430,650,'stump');
+        tree4.body.setSize(20,20);
+        tree4.setOffset(15,20);
+        tree4.setImmovable(true);
+        var tree5 = this.treeGroup.create(720,500,'stump');
+        tree5.body.setSize(20,20);
+        tree5.setOffset(15,20);
+        tree5.setImmovable(true);
+        var tree6 = this.treeGroup.create(620,700,'stump');
+        tree6.body.setSize(20,20);
+        tree6.setOffset(15,20);
+        tree6.setImmovable(true);
+        var tree7 = this.treeGroup.create(750,300,'stump');
+        tree7.body.setSize(20,20);
+        tree7.setOffset(15,20);
+        tree7.setImmovable(true);
 
         this.treeCollider = this.physics.add.collider(this.duckie, this.treeGroup);
         
         this.treeTrigGroup = this.physics.add.group(); //This is to set an invisible area around the tree to sense for space bar input that can fix the tree
-        var tTrig1 = this.treeTrigGroup.create(120,230, 'trigger');
+        var tTrig1 = this.treeTrigGroup.create(130,210, 'trigger');
+        var tTrig2 = this.treeTrigGroup.create(280,130, 'trigger');
+        var tTrig3 = this.treeTrigGroup.create(400,250, 'trigger');
+        var tTrig4 = this.treeTrigGroup.create(430,650, 'trigger');
+        var tTrig5 = this.treeTrigGroup.create(720,500, 'trigger');
+        var tTrig6 = this.treeTrigGroup.create(620,700, 'trigger');
+        var tTrig7 = this.treeTrigGroup.create(750,300, 'trigger');       
         
         this.treeTrigger = this.physics.add.overlap(this.duckie, this.treeTrigGroup, this.fixTree, null, this);
 
@@ -146,22 +176,28 @@ export default class GameLvl1 extends Phaser.Scene
 
         //Graphics for chest and chest mechanics
         this.chestGroup = this.physics.add.group();
-        var chest1 = this.chestGroup.create(180,60, 'chest', 0);
+        var chest1 = this.chestGroup.create(70,300, 'chest', 0);
+        chest1.setImmovable(true);
+        var chest2 = this.chestGroup.create(660,250, 'chest', 0);
+        chest2.setImmovable(true);
+        var chest1 = this.chestGroup.create(120,600, 'chest', 0);
         chest1.setImmovable(true);
 
 
         this.chestCollider = this.physics.add.collider(this.duckie, this.chestGroup);
 
         this.chestTrigGroup = this.physics.add.group(); //This is to set an invisible area around the tree to sense for space bar input that can fix the tree
-        var cTrig1 = this.chestTrigGroup.create(180,60, 'trigger');
+        var cTrig1 = this.chestTrigGroup.create(70,300, 'trigger');
+        var cTrig2 = this.chestTrigGroup.create(660,250, 'trigger');
+        var cTrig3 = this.chestTrigGroup.create(120,600, 'trigger');
 
         this.chestTrigger = this.physics.add.overlap(this.duckie, this.chestTrigGroup, this.openChest, null, this);
 
         //Linked list construction below with queue linking NEED NEW FACST
-        var node1 = new ListNode("", null)
-        var node2 = new ListNode("", null)
+        var node1 = new ListNode("Trees provide us with oxygen! \n One large tree can provide a day’s supply of oxygen for up to four people.", null)
+        var node2 = new ListNode("Some trees have been to the moon!\n \"Moon trees\" were grown from seeds taken to the moon during the Apollo 14 mission in early 1971. NASA and the US Forest Service wanted to see if the moon’s orbit caused the seeds to grow differently back on earth.", null)
         node1.next = node2;
-        var node3 = new ListNode("", null)
+        var node3 = new ListNode("Trees help reduce stress! \n Being around trees improves wellbeing. This is partly because they release chemicals called phytoncides. When we breathe them in, it can reduce blood pressure, lower anxiety levels, and increase pain threshold.", null)
         node2.next = node3;
 
         this.list = new LinkedList(node1);
@@ -219,7 +255,7 @@ export default class GameLvl1 extends Phaser.Scene
     }
     giveExitButton(popup,player,text1,text2,chest) //To allow player to exit the popup
     {
-        this.exitButton = this.physics.add.sprite(190,180,"closeButton");
+        this.exitButton = this.physics.add.sprite(190,200,"closeButton");
         this.exitButton.setInteractive().setScale(0.5).setDepth(20).setScrollFactor(0,0);
         this.exitButton.on('pointerout', function (pointer) {
             this.exitButton.setFrame(0);
@@ -299,7 +335,7 @@ export default class GameLvl1 extends Phaser.Scene
     }
     hurtDuckie(duck,bot)
     {
-        duck.setPosition(128,128); //Respawn at start
+        duck.setPosition(80,680); //Respawn at start
     
         var tween = this.tweens.add({ //Tweens for flickering effect when respawning
             targets: duck,

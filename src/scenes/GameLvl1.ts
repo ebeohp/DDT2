@@ -28,9 +28,9 @@ export default class GameLvl1 extends Phaser.Scene
     private duckie!: Phaser.Physics.Arcade.Sprite
 
     private heartGroup!: Phaser.Physics.Arcade.Group
-    private heart1!: Phaser.Physics.Arcade.Group
-    private heart2!: Phaser.Physics.Arcade.Group
-    private heart3!: Phaser.Physics.Arcade.Group
+    private heart1!: Phaser.Physics.Arcade.Sprite
+    private heart2!: Phaser.Physics.Arcade.Sprite
+    private heart3!: Phaser.Physics.Arcade.Sprite
     
     private myCam!: Phaser.Cameras.Scene2D.Camera
 
@@ -193,10 +193,10 @@ export default class GameLvl1 extends Phaser.Scene
         this.chestTrigger = this.physics.add.overlap(this.duckie, this.chestTrigGroup, this.openChest, null, this);
 
         //Linked list construction below with queue linking 
-        var node1 = new ListNode("Trees help save energy! \n Trees properly placed around buildings can reduce air conditioning needs by 30% \n and can save 20–50% in energy used for heating.", null)
+        var node1 = new ListNode("Trees help save energy! \n Trees properly placed around buildings can reduce air conditioning needs by 30% and can save 20–50% in energy used for heating.", null)
         var node2 = new ListNode("Trees help reduce climate change effects! \n In one year, an acre of mature trees absorbs the amount of CO2 produced by a car driven 26,000 miles.", null)
         node1.next = node2;
-        var node3 = new ListNode("Trees help clean our drinking water! \n Forested watersheds provide quality drinking water to more than 180 million Americans.", null)
+        var node3 = new ListNode("Trees help clean our drinking water! \n As rain falls to the Earth, it is slowed and filtered by trees, helping it soak into the soil. Trees then serve as natural sponges, collecting and filtering rainwater and releasing it slowly into streams and rivers.", null)
         node2.next = node3;
 
         this.list = new LinkedList(node1);
@@ -254,7 +254,7 @@ export default class GameLvl1 extends Phaser.Scene
     }
     giveExitButton(popup,player,text1,text2,chest) //To allow player to exit the popup
     {
-        this.exitButton = this.physics.add.sprite(190,180,"closeButton");
+        this.exitButton = this.physics.add.sprite(190,200,"closeButton");
         this.exitButton.setInteractive().setScale(0.5).setDepth(20).setScrollFactor(0,0);
         this.exitButton.on('pointerout', function (pointer) {
             this.exitButton.setFrame(0);
