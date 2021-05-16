@@ -12,5 +12,7 @@ module.exports = {
 		'eslint:recommended'
 	],
 	parser: "babel-eslint",
-	rules: {}
+	rules: [
+		
+	]
 }

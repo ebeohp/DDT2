@@ -20,8 +20,41 @@ class LinkedList{
     removeHead()
     {
         this.head = this.head.next
+    }   
+}
+
+class Queue {
+    private items: any
+    private headIndex: integer;
+    private tailIndex: integer;
+    constructor() 
+    {
+        this.items = {};
+        this.headIndex = 0;
+        this.tailIndex = 0;
+    }
+    enqueue(item) 
+    {
+        this.items[this.tailIndex] = item;
+        this.tailIndex++;
+    }
+    dequeue() 
+    {
+        const item = this.items[this.headIndex];
+        delete this.items[this.headIndex];
+        this.headIndex++;
+        return item;
+    }
+    peek() 
+    {
+        return this.items[this.headIndex];
+    }
+    getLength() 
+    {
+        return this.tailIndex - this.headIndex;
     }
 }
+
 export default class GameLvl1 extends Phaser.Scene
 {
     private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
@@ -58,6 +91,12 @@ export default class GameLvl1 extends Phaser.Scene
     
     list: LinkedList;
     exitButton: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
+    initialTime: number;
+    timeLabel: Phaser.GameObjects.BitmapText;
+    music: Phaser.Sound.BaseSound;
+    collectA: Phaser.Sound.BaseSound;
+    loseA: Phaser.Sound.BaseSound;
+    hurtA: Phaser.Sound.BaseSound;
 
 
 	constructor()
@@ -90,6 +129,31 @@ export default class GameLvl1 extends Phaser.Scene
             collidingTileColor: new Phaser.Display.Color(243,234,48, 255),
             faceColor: new Phaser.Display.Color(48,49,47,255),
         })*/
+        this.initialTime = 0;
+        this.timeLabel = this.add.bitmapText(300,7, "pixelFont", "Time: ",16);
+        this.timeLabel.setScrollFactor(0,0);
+        this.timeLabel.text = "Time: " + this.timeFormat(this.initialTime);
+        var countDown = this.time.addEvent({
+            delay:1000,
+            callback: this.onCount,
+            callbackScope: this,
+            loop: true
+        });
+        
+        this.music = this.sound.add("music");  
+        var musicConfig = { //optional
+            mute: false,
+            volume: 1,
+            rate: 1,
+            detune: 0,
+            seek: 0,
+            loop: true,
+            delay: 0
+        }
+        this.music.play(musicConfig);
+        this.collectA = this.sound.add("collect");
+        this.loseA = this.sound.add("lose");
+        this.hurtA = this.sound.add("hurt");
 
         this.duckie = this.physics.add.sprite(100,100, 'duckie', 4);
         var name = this.add.bitmapText(15,7, "pixelFont", "DUCKIE", 16);
@@ -167,10 +231,40 @@ export default class GameLvl1 extends Phaser.Scene
         fakeStar.setScrollFactor(0,0).setDepth(10);;
 
         this.starGroup = this.physics.add.group();
-        var star1 = this.starGroup.create(50,200, 'star');
-        star1.anims.play('star_spin');
-
         //make 2 arrays with x and y  of stars and then loop through + create stars 
+        var starCoord = 
+        [
+            [300, 190],
+            [340, 190],
+            [380, 190],
+            [380, 150],
+            [380, 110],
+            [420, 110],
+            [460, 110],
+            [600, 110],
+            [620, 170],
+            
+            [70,400],
+            [70,440],
+            [70,480],
+
+            [70,700],
+            [120,660],
+            [170,700],
+            [150,740],
+            [100,750],
+
+            [400,500],
+            [450,500],
+            [500,500],
+            
+
+        ];
+        for(let i = 0; i<starCoord.length; i++)
+        {
+                var aStar = this.starGroup.create(starCoord[i][0],starCoord[i][1], 'star');
+                aStar.anims.play('star_spin');
+        }
         
         this.physics.add.collider(this.duckie, this.starGroup, this.collectStar, null, this);
 
@@ -240,12 +334,12 @@ export default class GameLvl1 extends Phaser.Scene
         text.setDepth(20);
         text.setScrollFactor(0,0);
         this.list.removeHead();
-        this.tweens.add({ //This tweens doesnt do anything except call to create a button after 5 seconds
+        this.tweens.add({ //This tweens doesnt do anything except call to create a button after 3 seconds
             targets: text,
             alpha: { from: 1, to: 1 },
             repeat: 0,
             ease: 'Linear',
-            duration: 100, //3000
+            duration: 3000, //3000
             onComplete: function(){
                 this.giveExitButton(popup,player,funFact,text,chest); 
             },
@@ -328,7 +422,7 @@ export default class GameLvl1 extends Phaser.Scene
     {
         if(Phaser.Input.Keyboard.JustDown(this.spacebar))
         {
-            tree.setTexture('tree');
+            tree.setTexture('tree').setDepth(5);
             tree.setOrigin(0.5,0.66);
         }
     }
@@ -370,7 +464,16 @@ export default class GameLvl1 extends Phaser.Scene
         }
     
     }  
-
+    timeFormat(seconds){
+        var minutes = Math.floor(seconds/60);
+        var partInSeconds = seconds%60;
+        partInSeconds = partInSeconds.toString().padStart(2,"0");
+        return `${minutes}:${partInSeconds}`;
+    }
+    onCount(){
+        this.initialTime += 1;
+        this.timeLabel.text = "Time: " + this.timeFormat(this.initialTime);
+    }
     update(t: number, dt: number)
     {   
         if(!this.cursors || !this.duckie)

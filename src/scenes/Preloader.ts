@@ -78,6 +78,18 @@ export default class Preloader extends Phaser.Scene
             frameWidth: 320,
             frameHeight: 320
         });
+
+        this.load.spritesheet('redButton', 'items/redButton.png', {
+            frameWidth: 48,
+            frameHeight: 48
+        });
+
+        //Music and Sound Effects
+        this.load.audio("music", "music/effervesce.mp3");
+        this.load.audio("collect", "music/collect.wav");
+        this.load.audio("hurt", "music/hurt.wav");
+        this.load.audio("lose", "music/lose.wav");
+
     }
     create()
     {
@@ -170,6 +182,13 @@ export default class Preloader extends Phaser.Scene
             key: "close_button_clicked",
             frames: this.anims.generateFrameNames('closeButton', {start:8, end:8}),
             frameRate: 0,
+            repeat: 0
+        });
+
+        this.anims.create({
+            key: "red_button_press",
+            frames: this.anims.generateFrameNames('redButton'),
+            frameRate: 10,
             repeat: 0
         });
 

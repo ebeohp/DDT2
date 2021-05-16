@@ -58,6 +58,8 @@ export default class GameLvl1 extends Phaser.Scene
     
     list: LinkedList;
     exitButton: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
+    initialTime: number;
+    timeLabel: Phaser.GameObjects.BitmapText;
 
 
 	constructor()
@@ -90,7 +92,17 @@ export default class GameLvl1 extends Phaser.Scene
             collidingTileColor: new Phaser.Display.Color(243,234,48, 255),
             faceColor: new Phaser.Display.Color(48,49,47,255),
         })*/
-
+        this.initialTime = 0;
+        this.timeLabel = this.add.bitmapText(300,7, "pixelFont", "Time Left: ",16);
+        this.timeLabel.setScrollFactor(0,0);
+        this.timeLabel.text = "Time Left: " + this.timeFormat(this.initialTime);
+        var countDown = this.time.addEvent({
+            delay:1000,
+            callback: this.onCount,
+            callbackScope: this,
+            loop: true
+        });
+        
         this.duckie = this.physics.add.sprite(80,435, 'duckie', 4);
         var name = this.add.bitmapText(15,7, "pixelFont", "DUCKIE", 16);
         name.setScrollFactor(0,0);
@@ -163,8 +175,33 @@ export default class GameLvl1 extends Phaser.Scene
         fakeStar.setScrollFactor(0,0).setDepth(10);;
 
         this.starGroup = this.physics.add.group();
-        var star1 = this.starGroup.create(50,200, 'star');
-        star1.anims.play('star_spin');
+        var starCoord = 
+        [
+            [120,410],
+            [150,410],
+            [180,410],
+
+            [320,450],
+            [350,450],
+            [380,450],
+
+            [500,420],
+            [550,380],
+
+            [220,550],
+            [260,550],
+            [300,550],
+
+            [710,150],
+            [725,130],
+            [740,150]
+
+        ];
+        for(let i = 0; i<starCoord.length; i++)
+        {
+                var aStar = this.starGroup.create(starCoord[i][0],starCoord[i][1], 'star');
+                aStar.anims.play('star_spin');
+        }
 
         //make 2 arrays with x and y  of stars and then loop through + create stars 
         
@@ -366,7 +403,16 @@ export default class GameLvl1 extends Phaser.Scene
         }
     
     }  
-
+    timeFormat(seconds){
+        var minutes = Math.floor(seconds/60);
+        var partInSeconds = seconds%60;
+        partInSeconds = partInSeconds.toString().padStart(2,"0");
+        return `${minutes}:${partInSeconds}`;
+    }
+    onCount(){
+        this.initialTime += 1;
+        this.timeLabel.text = "Time Left: " + this.timeFormat(this.initialTime);
+    }
     update(t: number, dt: number)
     {   
         if(!this.cursors || !this.duckie)

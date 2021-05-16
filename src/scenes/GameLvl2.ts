@@ -58,6 +58,8 @@ export default class GameLvl1 extends Phaser.Scene
     
     list: LinkedList;
     exitButton: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
+    initialTime: number;
+    timeLabel: Phaser.GameObjects.BitmapText;
 
 
 	constructor()
@@ -90,6 +92,16 @@ export default class GameLvl1 extends Phaser.Scene
             collidingTileColor: new Phaser.Display.Color(243,234,48, 255),
             faceColor: new Phaser.Display.Color(48,49,47,255),
         })*/
+        this.initialTime = 0;
+        this.timeLabel = this.add.bitmapText(300,7, "pixelFont", "Time: ",16);
+        this.timeLabel.setScrollFactor(0,0);
+        this.timeLabel.text = "Time: " + this.timeFormat(this.initialTime);
+        var countDown = this.time.addEvent({
+            delay:1000,
+            callback: this.onCount,
+            callbackScope: this,
+            loop: true
+        });
 
         this.duckie = this.physics.add.sprite(80,680, 'duckie', 4);
         var name = this.add.bitmapText(15,7, "pixelFont", "DUCKIE", 16);
@@ -167,10 +179,29 @@ export default class GameLvl1 extends Phaser.Scene
         fakeStar.setScrollFactor(0,0).setDepth(10);;
 
         this.starGroup = this.physics.add.group();
-        var star1 = this.starGroup.create(50,200, 'star');
-        star1.anims.play('star_spin');
+        var starCoord = 
+        [
+            [300,700],
+            [340,650],
+            [340,600],
+            [400,580],
 
-        //make 2 arrays with x and y  of stars and then loop through + create stars 
+            [600,650],
+            [650,650],
+            [700,650],
+
+            [200,250],
+            [250,250],
+            [300,250],
+
+            [100,80],
+            [100,120]
+        ];
+        for(let i = 0; i<starCoord.length; i++)
+        {
+                var aStar = this.starGroup.create(starCoord[i][0],starCoord[i][1], 'star');
+                aStar.anims.play('star_spin');
+        }
         
         this.physics.add.collider(this.duckie, this.starGroup, this.collectStar, null, this);
 
@@ -371,7 +402,16 @@ export default class GameLvl1 extends Phaser.Scene
         }
     
     }  
-
+    timeFormat(seconds){
+        var minutes = Math.floor(seconds/60);
+        var partInSeconds = seconds%60;
+        partInSeconds = partInSeconds.toString().padStart(2,"0");
+        return `${minutes}:${partInSeconds}`;
+    }
+    onCount(){
+        this.initialTime += 1;
+        this.timeLabel.text = "Time: " + this.timeFormat(this.initialTime);
+    }
     update(t: number, dt: number)
     {   
         if(!this.cursors || !this.duckie)
