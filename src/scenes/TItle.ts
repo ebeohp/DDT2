@@ -4,6 +4,7 @@ export default class Preloader extends Phaser.Scene
 {
     spacebar: Phaser.Input.Keyboard.Key;
     button: Phaser.GameObjects.Sprite;
+    titlemusic: Phaser.Sound.BaseSound;
     constructor()
     {
         super('title')
@@ -14,7 +15,8 @@ export default class Preloader extends Phaser.Scene
     }
     create()
     {
-        
+       this.titlemusic = this.sound.add("titlemusic");  
+       this.titlemusic.play();
        var title = this.add.sprite(200,100, 'title');
        title.play('title_anim').setScale(0.5);
        this.add.bitmapText(150,210, "pixelFont", "PRESS SPACE TO PLAY!", 16);
@@ -38,6 +40,7 @@ export default class Preloader extends Phaser.Scene
     }
     startGame()
     {
+        this.titlemusic.stop();
         this.scene.start('game1'); 
     }
 }

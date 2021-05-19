@@ -45,14 +45,6 @@ class Queue {
         this.headIndex++;
         return item;
     }
-    peek() 
-    {
-        return this.items[this.headIndex];
-    }
-    getLength() 
-    {
-        return this.tailIndex - this.headIndex;
-    }
 }
 
 export default class GameLvl1 extends Phaser.Scene
@@ -97,6 +89,9 @@ export default class GameLvl1 extends Phaser.Scene
     collectA: Phaser.Sound.BaseSound;
     loseA: Phaser.Sound.BaseSound;
     hurtA: Phaser.Sound.BaseSound;
+    velocities: Queue;
+    bot2: any;
+    bot3: any;
 
 
 	constructor()
@@ -143,16 +138,17 @@ export default class GameLvl1 extends Phaser.Scene
         this.music = this.sound.add("music");  
         var musicConfig = { //optional
             mute: false,
-            volume: 1,
+            volume: 0.8,
             rate: 1,
             detune: 0,
             seek: 0,
             loop: true,
             delay: 0
         }
-        this.music.play(musicConfig);
+        //this.music.play(musicConfig); for now off
         this.collectA = this.sound.add("collect");
         this.loseA = this.sound.add("lose");
+        
         this.hurtA = this.sound.add("hurt");
 
         this.duckie = this.physics.add.sprite(100,100, 'duckie', 4);
@@ -162,12 +158,7 @@ export default class GameLvl1 extends Phaser.Scene
         this.myCam = this.cameras.main.startFollow(this.duckie, true);
 
         this.physics.add.collider(this.duckie, wallsLayer);
-        
-        this.botGroup = this.physics.add.group();
-        this.bot1 = this.botGroup.create(200,128,'bot');
-        this.bot1.anims.play('bot_move', true);
-        this.bot1.setImmovable(true);
-        this.botCollider = this.physics.add.collider(this.duckie, this.botGroup, this.hurtDuckie, null, this);
+    
 
 
         //Graphics for lives system and groups hearts 
@@ -294,8 +285,53 @@ export default class GameLvl1 extends Phaser.Scene
         node2.next = node3;
 
         this.list = new LinkedList(node1);
-        //console.log(this.list.head.next.data);
+       
+        //Bots Below
+        this.botGroup = this.physics.add.group();
+        this.bot1 = this.botGroup.create(500,360,'bot');
+        this.bot1.anims.play('bot_move', true);
+        this.bot1.setImmovable(true);
 
+        this.bot2 = this.botGroup.create(250,200,'bot');
+        this.bot2.anims.play('bot_move', true);
+        this.bot2.setImmovable(true);
+
+        this.bot3 = this.botGroup.create(300,590,'bot');
+        this.bot3.anims.play('bot_move', true);
+        this.bot3.setImmovable(true);
+
+        this.botCollider = this.physics.add.collider(this.duckie, this.botGroup, this.hurtDuckie, null, this);
+
+        //Queue creation for bot below
+        this.velocities = new Queue();
+        this.velocities.enqueue(-100);
+        this.velocities.enqueue(100);
+        this.time.addEvent({
+            delay: 1000,
+            callback: this.move1,
+            callbackScope: this,
+            loop: true
+        });
+        this.time.addEvent({
+            delay: 2000,
+            callback: this.move2,
+            callbackScope: this,
+            loop: true
+        });
+
+    }
+    move1() //Up and down
+    {
+        var velocity =  this.velocities.dequeue();
+        this.bot1.setVelocity(0,velocity);
+        this.bot3.setVelocity(0,velocity);
+        this.velocities.enqueue(velocity);
+    }
+    move2() //Left and right
+    {
+        var velocity =  this.velocities.dequeue();
+        this.bot2.setVelocity(velocity,0);
+        this.velocities.enqueue(velocity);
     }
     openChest(duck, chest)
     {
@@ -400,6 +436,7 @@ export default class GameLvl1 extends Phaser.Scene
     
     collectStar(duck, star)
     {
+        this.collectA.play();
         star.disableBody(true,false);
         this.numStars += 1;
         this.starText.text = "       X " + this.numStars;
@@ -428,6 +465,16 @@ export default class GameLvl1 extends Phaser.Scene
     }
     hurtDuckie(duck,bot)
     {
+        var hurtConfig = { //optional
+            mute: false,
+            volume: 1.5,
+            rate: 1,
+            detune: 0,
+            seek: 0,
+            loop: false,
+            delay: 0
+        }
+        this.hurtA.play(hurtConfig);
         duck.setPosition(128,128); //Respawn at start
     
         var tween = this.tweens.add({ //Tweens for flickering effect when respawning
@@ -447,7 +494,7 @@ export default class GameLvl1 extends Phaser.Scene
         console.log("d" + this.numHearts);
         if(this.numHearts == 2 && once!=1)
         {
-            this.heart1.setFrame(1);
+            this.heart3.setFrame(1);
             once+=1;
         }
         if(this.numHearts == 1 && once!=1)
@@ -457,10 +504,14 @@ export default class GameLvl1 extends Phaser.Scene
         }
         if(this.numHearts == 0 && once!=1)
         {
-            this.heart3.setFrame(1);
-            
-            //Make a try again? button show up
+            this.heart1.setFrame(1);
             once+=1;
+            this.time.addEvent({
+                delay: 1000,
+                callback: this.gameOver,
+                callbackScope: this,
+                loop: false
+            });
         }
     
     }  
@@ -513,9 +564,15 @@ export default class GameLvl1 extends Phaser.Scene
         }
         if(this.numHearts == 0)
         {
-            this.duckie.anims.play("duck_cry", true);
+            this.duckie.anims.play("duck_cry", true)
             this.duckie.disableBody(true,false);
         }        
         
     }
+    gameOver()
+    {
+        this.music.stop();
+        this.scene.start('gameover', {level: 1});
+    }
+    
 }

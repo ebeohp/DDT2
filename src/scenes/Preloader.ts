@@ -84,11 +84,23 @@ export default class Preloader extends Phaser.Scene
             frameHeight: 48
         });
 
+        this.load.spritesheet('yesNoButton', 'popup/yesNo.png', {
+            frameWidth: 96,
+            frameHeight: 96
+        });
+        this.load.spritesheet('flag', 'items/flag.png', {
+            frameWidth: 32,
+            frameHeight: 32
+        });
+
         //Music and Sound Effects
+        this.load.audio("titlemusic", "music/melody-meadow.ogg");
         this.load.audio("music", "music/effervesce.mp3");
         this.load.audio("collect", "music/collect.wav");
         this.load.audio("hurt", "music/hurt.wav");
         this.load.audio("lose", "music/lose.wav");
+        this.load.audio("sad", "music/sadnoises.mp3");
+        this.load.audio("planted", "music/planted.mp3");
 
     }
     create()
@@ -192,7 +204,7 @@ export default class Preloader extends Phaser.Scene
             repeat: 0
         });
 
-        this.scene.start('title'); 
+        this.scene.start('game3'); 
     }
 
 }

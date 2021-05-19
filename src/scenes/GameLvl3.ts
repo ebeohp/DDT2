@@ -22,7 +22,30 @@ class LinkedList{
         this.head = this.head.next
     }
 }
-export default class GameLvl1 extends Phaser.Scene
+class Queue {
+    private items: any
+    private headIndex: integer;
+    private tailIndex: integer;
+    constructor() 
+    {
+        this.items = {};
+        this.headIndex = 0;
+        this.tailIndex = 0;
+    }
+    enqueue(item) 
+    {
+        this.items[this.tailIndex] = item;
+        this.tailIndex++;
+    }
+    dequeue() 
+    {
+        const item = this.items[this.headIndex];
+        delete this.items[this.headIndex];
+        this.headIndex++;
+        return item;
+    }
+}
+export default class GameLvl3 extends Phaser.Scene
 {
     private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
     private duckie!: Phaser.Physics.Arcade.Sprite
@@ -60,6 +83,12 @@ export default class GameLvl1 extends Phaser.Scene
     exitButton: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
     initialTime: number;
     timeLabel: Phaser.GameObjects.BitmapText;
+    velocities1: Queue;
+    bot2: any;
+    bot3: any;
+    velocities2: Queue;
+    bot4: any;
+    bot5: any;
 
 
 	constructor()
@@ -102,7 +131,7 @@ export default class GameLvl1 extends Phaser.Scene
             callbackScope: this,
             loop: true
         });
-        
+        //80,435
         this.duckie = this.physics.add.sprite(80,435, 'duckie', 4);
         var name = this.add.bitmapText(15,7, "pixelFont", "DUCKIE", 16);
         name.setScrollFactor(0,0);
@@ -110,13 +139,6 @@ export default class GameLvl1 extends Phaser.Scene
         this.myCam = this.cameras.main.startFollow(this.duckie, true);
 
         this.physics.add.collider(this.duckie, wallsLayer);
-        
-        this.botGroup = this.physics.add.group();
-        this.bot1 = this.botGroup.create(200,128,'bot');
-        this.bot1.anims.play('bot_move', true);
-        this.bot1.setImmovable(true);
-        this.botCollider = this.physics.add.collider(this.duckie, this.botGroup, this.hurtDuckie, null, this);
-
 
         //Graphics for lives system and groups hearts 
         this.heartGroup = this.physics.add.group();
@@ -233,8 +255,61 @@ export default class GameLvl1 extends Phaser.Scene
         node2.next = node3;
 
         this.list = new LinkedList(node1);
-        //console.log(this.list.head.next.data);
+        
+        this.botGroup = this.physics.add.group();
+        this.bot1 = this.botGroup.create(260,50,'bot');
+        this.bot1.anims.play('bot_move', true);
+        this.bot1.setImmovable(true);
+        this.bot2 = this.botGroup.create(600,230,'bot');
+        this.bot2.anims.play('bot_move', true);
+        this.bot2.setImmovable(true);
+        this.bot3 = this.botGroup.create(650,350,'bot');
+        this.bot3.anims.play('bot_move', true);
+        this.bot3.setImmovable(true);
+        this.bot4 = this.botGroup.create(150,550,'bot');
+        this.bot4.anims.play('bot_move', true);
+        this.bot4.setImmovable(true);
+        this.bot5 = this.botGroup.create(730,200,'bot');
+        this.bot5.anims.play('bot_move', true);
+        this.bot5.setImmovable(true);
 
+        //this.botCollider = this.physics.add.collider(this.duckie, this.botGroup, this.hurtDuckie, null, this);
+
+        //Queue creation for bot below
+        this.velocities1 = new Queue();
+        this.velocities1.enqueue(150);
+        this.velocities1.enqueue(-150);
+
+        this.velocities2 = new Queue();
+        this.velocities2.enqueue(200);
+        this.velocities2.enqueue(-200);
+        
+        this.time.addEvent({
+            delay: 1500,
+            callback: this.move1,
+            callbackScope: this,
+            loop: true
+        });
+        this.time.addEvent({
+            delay: 2000,
+            callback: this.move2,
+            callbackScope: this,
+            loop: true
+        });
+    }
+    move1() // short
+    {
+        var velocity =  this.velocities1.dequeue();
+        this.bot1.setVelocity(0,velocity);
+        this.bot2.setVelocity(0,velocity);
+        this.velocities1.enqueue(velocity);
+    }
+    move2() // long
+    {
+        var velocity =  this.velocities2.dequeue();
+        this.bot3.setVelocity(0,velocity);
+        this.bot4.setVelocity(velocity,0);
+        this.velocities2.enqueue(velocity);
     }
     openChest(duck, chest)
     {
