@@ -91,8 +91,8 @@ export default class Preloader extends Phaser.Scene
             frameHeight: 96
         });
         this.load.spritesheet('flag', 'items/flag.png', {
-            frameWidth: 32,
-            frameHeight: 32
+            frameWidth: 48,
+            frameHeight: 48
         });
 
         //Music and Sound Effects
@@ -181,13 +181,13 @@ export default class Preloader extends Phaser.Scene
         
         this.anims.create({
             key: "red_flag",
-            frames: this.anims.generateFrameNames('flag',{frames: [0,1,2]}),
+            frames: this.anims.generateFrameNames('flag',{start:0, end:2}),
             frameRate: 10,
             repeat: -1
         });
         this.anims.create({
             key: "blue_flag",
-            frames: this.anims.generateFrameNames('flag',{frames: [3,4,5]}),
+            frames: this.anims.generateFrameNames('flag',{start:3, end:5}),
             frameRate: 10,
             repeat: -1
         });

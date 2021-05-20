@@ -93,6 +93,8 @@ export default class GameLvl1 extends Phaser.Scene
     bot2: any;
     bot3: any;
     plantedA: Phaser.Sound.BaseSound;
+    flag: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
+    flagCollider: Phaser.Physics.Arcade.Collider;
 
 
 	constructor()
@@ -107,8 +109,8 @@ export default class GameLvl1 extends Phaser.Scene
 
     create()
     {
-        
         this.cameras.main.fadeIn(200);
+        //Map Set up
         const map = this.make.tilemap({key: 'dungeon1'});
         const tileset1 = map.addTilesetImage('dungeon', 'wallTiles');
         const tileset2 = map.addTilesetImage('green', 'grassTiles');
@@ -126,14 +128,9 @@ export default class GameLvl1 extends Phaser.Scene
         var wallb = invisWall.create(840,730, 'trigger');
         wallb.setImmovable();
         
-        //Just to look at the walls colliders 
-        /*
-        const debugGraphics = this.add.graphics().setAlpha(0.7);
-        wallsLayer.renderDebug(debugGraphics, {
-            tileColor: null,
-            collidingTileColor: new Phaser.Display.Color(243,234,48, 255),
-            faceColor: new Phaser.Display.Color(48,49,47,255),
-        })*/
+        this.flag = this.physics.add.sprite(780,700,'flag');
+        this.flag.setImmovable();
+        this.flag.play('red_flag');
 
         this.initialTime = 0;
         this.timeLabel = this.add.bitmapText(300,7, "pixelFont", "Time: ",16);
@@ -162,8 +159,9 @@ export default class GameLvl1 extends Phaser.Scene
         this.loseA = this.sound.add("lose");
         this.hurtA = this.sound.add("hurt");
         this.plantedA = this.sound.add("planted");
-
-        this.duckie = this.physics.add.sprite(100,100, 'duckie', 4);
+        
+        //100,100
+        this.duckie = this.physics.add.sprite(700,700, 'duckie', 4);
         var name = this.add.bitmapText(15,7, "pixelFont", "DUCKIE", 16);
         name.setScrollFactor(0,0).setDepth(20);
         this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -171,6 +169,7 @@ export default class GameLvl1 extends Phaser.Scene
 
         this.physics.add.collider(this.duckie, wallsLayer);
         this.physics.add.collider(this.duckie, invisWall);
+        this.flagCollider = this.physics.add.collider(this.duckie, this.flag, this.flagColor, null, this);
 
 
         //Graphics for lives system and groups hearts 
@@ -603,6 +602,21 @@ export default class GameLvl1 extends Phaser.Scene
 
         this.scene.stop();
         this.scene.start('gameover', {level: 1});
+    }
+    flagColor()
+    {
+        this.flag.play('blue_flag');
+        this.flag.setDepth(5);
+        //Going to remove this collision body away so calls will stop after player has collided once
+        this.physics.world.removeCollider(this.flagCollider);
+        this.physics.add.collider(this.duckie, this.flag); //Add a new collider for small collider so duckie cant walk through flag
+
+        this.flag.body.setSize(10, 5);
+        this.flag.setOffset(12,38);
+    }
+    transition()
+    {
+
     }
     
 }

@@ -2,6 +2,8 @@ import Phaser from 'phaser'
 import GameLvl1 from './GameLvl1';
 import GameLvl2 from './GameLvl2';
 import GameLvl3 from './GameLvl3';
+import Preloader from './Preloader';
+import Title from './Title';
 
 export default class GameOver extends Phaser.Scene
 {
@@ -96,8 +98,24 @@ export default class GameOver extends Phaser.Scene
         //Completely restart the game
         this.sys.game.destroy(true);
 
-        var game = new Phaser.Game(config); //Need to get config from main.ts
+         new Phaser.Game({
 
+            type: Phaser.AUTO,
+            width: 400, //Width of game canvas
+            height: 250, //Height of game canvas
+            physics: { //Physics configuration for game
+                default: 'arcade', //Using arcade physics
+                arcade: {
+                    debug: true,
+                    gravity: { y: 0 } //No gravity for a top down game
+                }
+            },
+            scene: [Preloader, Title, GameLvl1, GameLvl2, GameLvl3, GameOver], //Has the scenes in order they should go
+            scale: {
+                zoom: 2 //Scales up all images 2 times
+            }
+        
+        })
               
         
     }
