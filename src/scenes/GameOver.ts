@@ -1,5 +1,4 @@
 import Phaser from 'phaser'
-import { textChangeRangeIsUnchanged } from 'typescript';
 
 export default class GameOver extends Phaser.Scene
 {
@@ -19,45 +18,60 @@ export default class GameOver extends Phaser.Scene
     }
     create()
     {
-        this.add.bitmapText(150,90, "pixelFont", "GAME OVER", 30);
+        this.add.bitmapText(150,50, "pixelFont", "GAME OVER", 30);
+        this.add.bitmapText(150,120, "pixelFont", "Try again?", 30);
 
-        var duckie = this.physics.add.sprite(80,20, 'duckie', 5);
-        duckie.body.gravity.y = 800;
-        duckie.body.setBounce(0,0.5);
 
         var sadSound = this.sound.add('sad'); 
 
-        var yesButton = this.physics.add.sprite(120,180,'yesNoButton', 0);
+        var yesButton = this.physics.add.sprite(120,200,'yesNoButton', 0);
         yesButton.setInteractive().setImmovable(true);
         yesButton.body.setSize(96,35);
 
-        var collider = this.physics.add.collider(duckie, yesButton, this.tryAgain, null, this);
 
-        var noButton = this.add.sprite(270,180,'yesNoButton', 2);
+        var noButton = this.add.sprite(280,200,'yesNoButton', 2);
         noButton.setInteractive();
         //have a button for yes
             //when clicked, make duck switch frame to happy and start scene according to this.level number
         //have a button for no
             //when clicked, do some sad duck noise and this.scene.start('title');
-        yesButton.on('pointerout', function (pointer) {
+        yesButton.on('pointerout', (pointer) => {
             yesButton.setFrame(0);
         }, this);
-        yesButton.on('pointerup', function (pointer) {
+        yesButton.on('pointerup', (pointer) => {
             yesButton.setFrame(1);
             noButton.disableInteractive;
             yesButton.disableInteractive();
+            if(this.level == 1)
+            {
+                this.scene.stop();
+                //this.scene.start('game1');
+                var theOtherScene = this.scene.get('game1');
+                theOtherScene.registry.destroy();
+                theOtherScene.events.off();
+                theOtherScene.scene.restart();
+            }
+            else if(this.level ==2)
+            {
+                this.scene.start('game2');
+            }
+            else
+            {
+                this.scene.start('game3');
+            }
+            
         });
-        noButton.on('pointerout', function (pointer) {
+        noButton.on('pointerout', (pointer) => {
             noButton.setFrame(2);
         }, this);
 
-        noButton.on('pointerup', function (pointer) {
+        noButton.on('pointerup', (pointer) => {
             noButton.setFrame(3);
             sadSound.play();
             noButton.disableInteractive();
             yesButton.disableInteractive();
             this.time.addEvent({
-                delay: 500, 
+                delay: 3000, 
                 callback: this.endGame,
                 callbackScope: this,
                 loop: false
@@ -74,7 +88,22 @@ export default class GameOver extends Phaser.Scene
 
     endGame()
     {
+        if(this.level == 1)
+        { 
+            this.scene.stop('game1');
+
+        }
+        else if(this.level ==2)
+        {
+            this.scene.stop('game2');
+        }
+        else
+        {
+            this.scene.stop('game3'); 
+        }
+        this.scene.stop();
         this.scene.start('title');
+        
     }
 
 }

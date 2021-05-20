@@ -43,6 +43,8 @@ export default class Preloader extends Phaser.Scene
         this.load.tilemapTiledJSON('dungeon2', 'tiles/dungeon02.json');
         this.load.tilemapTiledJSON('dungeon3', 'tiles/dungeon03.json');
 
+        this.load.image('titlemap', 'decoration/titlemap.png');
+
         this.load.spritesheet('duckie', 'character/duckie.png', {
             frameWidth: 32,
             frameHeight: 32
@@ -94,7 +96,7 @@ export default class Preloader extends Phaser.Scene
         });
 
         //Music and Sound Effects
-        this.load.audio("titlemusic", "music/melody-meadow.ogg");
+        this.load.audio("titlemusic", "music/melodyMeadow.ogg");
         this.load.audio("music", "music/effervesce.mp3");
         this.load.audio("collect", "music/collect.wav");
         this.load.audio("hurt", "music/hurt.wav");
@@ -178,6 +180,19 @@ export default class Preloader extends Phaser.Scene
         });
         
         this.anims.create({
+            key: "red_flag",
+            frames: this.anims.generateFrameNames('flag',{frames: [0,1,2]}),
+            frameRate: 10,
+            repeat: -1
+        });
+        this.anims.create({
+            key: "blue_flag",
+            frames: this.anims.generateFrameNames('flag',{frames: [3,4,5]}),
+            frameRate: 10,
+            repeat: -1
+        });
+
+        this.anims.create({
             key: "chest_open",
             frames: this.anims.generateFrameNames('chest', {start:1, end:1}),
             frameRate: 0,
@@ -204,7 +219,7 @@ export default class Preloader extends Phaser.Scene
             repeat: 0
         });
 
-        this.scene.start('game3'); 
+        this.scene.start('game1'); 
     }
 
 }

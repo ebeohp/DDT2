@@ -89,6 +89,11 @@ export default class GameLvl3 extends Phaser.Scene
     velocities2: Queue;
     bot4: any;
     bot5: any;
+    music: Phaser.Sound.BaseSound;
+    collectA: Phaser.Sound.BaseSound;
+    loseA: Phaser.Sound.BaseSound;
+    hurtA: Phaser.Sound.BaseSound;
+    plantedA: Phaser.Sound.BaseSound;
 
 
 	constructor()
@@ -103,6 +108,7 @@ export default class GameLvl3 extends Phaser.Scene
 
     create()
     {
+        this.cameras.main.fadeIn(200);
         const map = this.make.tilemap({key: 'dungeon3'});
         const tileset1 = map.addTilesetImage('dungeon', 'wallTiles');
         const tileset2 = map.addTilesetImage('green', 'grassTiles');
@@ -113,32 +119,45 @@ export default class GameLvl3 extends Phaser.Scene
     
         wallsLayer.setCollisionByProperty({collides: true})
         
-        //Just to look at the walls colliders 
-        /*
-        const debugGraphics = this.add.graphics().setAlpha(0.7);
-        wallsLayer.renderDebug(debugGraphics, {
-            tileColor: null,
-            collidingTileColor: new Phaser.Display.Color(243,234,48, 255),
-            faceColor: new Phaser.Display.Color(48,49,47,255),
-        })*/
+        var invisWall = this.physics.add.sprite(-40,440, 'trigger');
+        invisWall.setImmovable();
+
         this.initialTime = 0;
-        this.timeLabel = this.add.bitmapText(300,7, "pixelFont", "Time Left: ",16);
-        this.timeLabel.setScrollFactor(0,0);
-        this.timeLabel.text = "Time Left: " + this.timeFormat(this.initialTime);
+        this.timeLabel = this.add.bitmapText(300,7, "pixelFont", "Time: ",16);
+        this.timeLabel.setScrollFactor(0,0).setDepth(20);
+        this.timeLabel.text = "Time: " + this.timeFormat(this.initialTime);
         var countDown = this.time.addEvent({
             delay:1000,
             callback: this.onCount,
             callbackScope: this,
             loop: true
         });
+        
+        this.music = this.sound.add("music");  
+        var musicConfig = { //optional
+            mute: false,
+            volume: 0.8,
+            rate: 1,
+            detune: 0,
+            seek: 0,
+            loop: true,
+            delay: 0
+        }
+        this.music.play(musicConfig); 
+        this.collectA = this.sound.add("collect");
+        this.loseA = this.sound.add("lose");
+        this.hurtA = this.sound.add("hurt");
+        this.plantedA = this.sound.add("planted");
+        
         //80,435
         this.duckie = this.physics.add.sprite(80,435, 'duckie', 4);
         var name = this.add.bitmapText(15,7, "pixelFont", "DUCKIE", 16);
-        name.setScrollFactor(0,0);
+        name.setScrollFactor(0,0).setDepth(5);
         this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.myCam = this.cameras.main.startFollow(this.duckie, true);
 
         this.physics.add.collider(this.duckie, wallsLayer);
+        this.physics.add.collider(this.duckie, invisWall);
 
         //Graphics for lives system and groups hearts 
         this.heartGroup = this.physics.add.group();
@@ -273,7 +292,7 @@ export default class GameLvl3 extends Phaser.Scene
         this.bot5.anims.play('bot_move', true);
         this.bot5.setImmovable(true);
 
-        //this.botCollider = this.physics.add.collider(this.duckie, this.botGroup, this.hurtDuckie, null, this);
+        this.botCollider = this.physics.add.collider(this.duckie, this.botGroup, this.hurtDuckie, null, this);
 
         //Queue creation for bot below
         this.velocities1 = new Queue();
@@ -393,8 +412,15 @@ export default class GameLvl3 extends Phaser.Scene
     giveStars(player,chest)
     {
         var star = this.starGroup.create(chest.x,chest.y, 'star'); //Starting for the chest
-        star.disableBody(true,false);
+        //star.disableBody(true,false);
         star.setFrame(1);
+
+        this.time.addEvent({
+            delay: 400,
+            callback: this.starSound,
+            callbackScope: this,
+            repeat: 5
+        });
         this.tweens.add({
             targets: star,
             repeat: 5,
@@ -403,7 +429,8 @@ export default class GameLvl3 extends Phaser.Scene
             ease: 'Linear',
             duration: 400,
             onComplete: function(){
-                player.enableBody(false,0, 0, true, true); //Allow player to move again and enable physics body
+                
+                player.enableBody(false, 0, 0, true, true); //Allow player to move again and enable physics body
                 star.disableBody(true,true);
                 this.numStars += 5;
                 this.starText.text = "       X " + this.numStars;
@@ -411,9 +438,14 @@ export default class GameLvl3 extends Phaser.Scene
             callbackScope: this
         }); 
     }
+    starSound()
+    {
+        this.collectA.play();
+    }
     
     collectStar(duck, star)
     {
+        this.starSound();
         star.disableBody(true,false);
         this.numStars += 1;
         this.starText.text = "       X " + this.numStars;
@@ -437,12 +469,26 @@ export default class GameLvl3 extends Phaser.Scene
         if(Phaser.Input.Keyboard.JustDown(this.spacebar))
         {
             tree.setTexture('tree');
+            tree.disableBody(true,false);
+            this.plantedA.play();
+            tree.setDepth(5);
             tree.setOrigin(0.5,0.66);
         }
     }
     hurtDuckie(duck,bot)
     {
-        duck.setPosition(128,128); //Respawn at start
+        var hurtConfig = { //optional
+            mute: false,
+            volume: 1.5,
+            rate: 1,
+            detune: 0,
+            seek: 0,
+            loop: false,
+            delay: 0
+        }
+        this.hurtA.play(hurtConfig);
+
+        duck.setPosition(80,435); //Respawn at start
     
         var tween = this.tweens.add({ //Tweens for flickering effect when respawning
             targets: duck,
@@ -471,10 +517,16 @@ export default class GameLvl3 extends Phaser.Scene
         }
         if(this.numHearts == 0 && once!=1)
         {
+            this.music.stop();
+            this.loseA.play();
             this.heart3.setFrame(1);
-            
-            //Make a try again? button show up
             once+=1;
+            this.time.addEvent({
+                delay: 1000,
+                callback: this.gameOver,
+                callbackScope: this,
+                loop: false
+            });
         }
     
     }  
@@ -531,5 +583,9 @@ export default class GameLvl3 extends Phaser.Scene
             this.duckie.disableBody(true,false);
         }        
         
+    }
+    gameOver()
+    {
+        this.scene.start('gameover', {level: 3});
     }
 }

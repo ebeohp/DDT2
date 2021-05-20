@@ -92,6 +92,7 @@ export default class GameLvl1 extends Phaser.Scene
     velocities: Queue;
     bot2: any;
     bot3: any;
+    plantedA: Phaser.Sound.BaseSound;
 
 
 	constructor()
@@ -106,6 +107,8 @@ export default class GameLvl1 extends Phaser.Scene
 
     create()
     {
+        
+        this.cameras.main.fadeIn(200);
         const map = this.make.tilemap({key: 'dungeon1'});
         const tileset1 = map.addTilesetImage('dungeon', 'wallTiles');
         const tileset2 = map.addTilesetImage('green', 'grassTiles');
@@ -115,6 +118,13 @@ export default class GameLvl1 extends Phaser.Scene
         
     
         wallsLayer.setCollisionByProperty({collides: true})
+
+        var invisWall = this.physics.add.group();
+
+        var walla = invisWall.create(840,630, 'trigger');
+        walla.setImmovable();
+        var wallb = invisWall.create(840,730, 'trigger');
+        wallb.setImmovable();
         
         //Just to look at the walls colliders 
         /*
@@ -124,9 +134,10 @@ export default class GameLvl1 extends Phaser.Scene
             collidingTileColor: new Phaser.Display.Color(243,234,48, 255),
             faceColor: new Phaser.Display.Color(48,49,47,255),
         })*/
+
         this.initialTime = 0;
         this.timeLabel = this.add.bitmapText(300,7, "pixelFont", "Time: ",16);
-        this.timeLabel.setScrollFactor(0,0);
+        this.timeLabel.setScrollFactor(0,0).setDepth(20);
         this.timeLabel.text = "Time: " + this.timeFormat(this.initialTime);
         var countDown = this.time.addEvent({
             delay:1000,
@@ -135,6 +146,7 @@ export default class GameLvl1 extends Phaser.Scene
             loop: true
         });
         
+        //Music added here
         this.music = this.sound.add("music");  
         var musicConfig = { //optional
             mute: false,
@@ -145,20 +157,20 @@ export default class GameLvl1 extends Phaser.Scene
             loop: true,
             delay: 0
         }
-        //this.music.play(musicConfig); for now off
+        this.music.play(musicConfig);
         this.collectA = this.sound.add("collect");
         this.loseA = this.sound.add("lose");
-        
         this.hurtA = this.sound.add("hurt");
+        this.plantedA = this.sound.add("planted");
 
         this.duckie = this.physics.add.sprite(100,100, 'duckie', 4);
         var name = this.add.bitmapText(15,7, "pixelFont", "DUCKIE", 16);
-        name.setScrollFactor(0,0);
+        name.setScrollFactor(0,0).setDepth(20);
         this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.myCam = this.cameras.main.startFollow(this.duckie, true);
 
         this.physics.add.collider(this.duckie, wallsLayer);
-    
+        this.physics.add.collider(this.duckie, invisWall);
 
 
         //Graphics for lives system and groups hearts 
@@ -363,10 +375,10 @@ export default class GameLvl1 extends Phaser.Scene
     }
     displayFact(popup,player,chest)
     {
-        var funFact = this.add.text(170,70, 'Fun Fact!', { font: '"Press Start 2P"', color: '#000000', align: 'center', wordWrap: { width: 200 } });
+        var funFact = this.add.text(170,70, 'Fun Fact!', { font: 'Arial', color: '#000000', align: 'center', wordWrap: { width: 200 } });
         funFact.setDepth(20);
         funFact.setScrollFactor(0,0);
-        var text = this.add.text(95,90, this.list.head.data, { font: '"Press Start 2P"', color: '#000000', align: 'center', wordWrap: { width: 200 } });
+        var text = this.add.text(95,90, this.list.head.data, { font: 'Arial', color: '#000000', align: 'center', wordWrap: { width: 200 } });
         text.setDepth(20);
         text.setScrollFactor(0,0);
         this.list.removeHead();
@@ -417,6 +429,12 @@ export default class GameLvl1 extends Phaser.Scene
         var star = this.starGroup.create(chest.x,chest.y, 'star'); //Starting for the chest
         star.disableBody(true,false);
         star.setFrame(1);
+        this.time.addEvent({
+            delay: 400,
+            callback: this.starSound,
+            callbackScope: this,
+            repeat: 5
+        });
         this.tweens.add({
             targets: star,
             repeat: 5,
@@ -433,10 +451,13 @@ export default class GameLvl1 extends Phaser.Scene
             callbackScope: this
         }); 
     }
-    
-    collectStar(duck, star)
+    starSound()
     {
         this.collectA.play();
+    }
+    collectStar(duck, star)
+    {
+        this.starSound();
         star.disableBody(true,false);
         this.numStars += 1;
         this.starText.text = "       X " + this.numStars;
@@ -460,6 +481,9 @@ export default class GameLvl1 extends Phaser.Scene
         if(Phaser.Input.Keyboard.JustDown(this.spacebar))
         {
             tree.setTexture('tree').setDepth(5);
+            tree.disableBody(true,false);
+            this.plantedA.play();
+            tree.setDepth(5);
             tree.setOrigin(0.5,0.66);
         }
     }
@@ -475,7 +499,8 @@ export default class GameLvl1 extends Phaser.Scene
             delay: 0
         }
         this.hurtA.play(hurtConfig);
-        duck.setPosition(128,128); //Respawn at start
+
+        duck.setPosition(100,100); //Respawn at start
     
         var tween = this.tweens.add({ //Tweens for flickering effect when respawning
             targets: duck,
@@ -491,7 +516,6 @@ export default class GameLvl1 extends Phaser.Scene
         this.numHearts -= 1;
         var once = 0;
         
-        console.log("d" + this.numHearts);
         if(this.numHearts == 2 && once!=1)
         {
             this.heart3.setFrame(1);
@@ -504,10 +528,13 @@ export default class GameLvl1 extends Phaser.Scene
         }
         if(this.numHearts == 0 && once!=1)
         {
+            this.music.stop();
+            this.loseA.play();
             this.heart1.setFrame(1);
             once+=1;
+            this.myCam.zoomTo(3, 2000);
             this.time.addEvent({
-                delay: 1000,
+                delay: 2000,
                 callback: this.gameOver,
                 callbackScope: this,
                 loop: false
@@ -572,7 +599,8 @@ export default class GameLvl1 extends Phaser.Scene
     gameOver()
     {
         this.music.stop();
-        this.scene.start('gameover', {level: 1});
+
+        this.scene.launch('gameover', {level: 1});
     }
     
 }
