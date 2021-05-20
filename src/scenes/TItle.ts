@@ -103,6 +103,7 @@ export default class Preloader extends Phaser.Scene
     startGame()
     {
         this.titlemusic.stop();
+        this.scene.stop();
         this.scene.start('game1'); 
     }
 }

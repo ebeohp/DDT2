@@ -546,7 +546,7 @@ export default class GameLvl2 extends Phaser.Scene
         console.log("d" + this.numHearts);
         if(this.numHearts == 2 && once!=1)
         {
-            this.heart1.setFrame(1);
+            this.heart3.setFrame(1);
             once+=1;
         }
         if(this.numHearts == 1 && once!=1)
@@ -558,11 +558,11 @@ export default class GameLvl2 extends Phaser.Scene
         {
             this.music.stop();
             this.loseA.play();
-            this.heart3.setFrame(1);
-            
+            this.heart1.setFrame(1);
             once+=1;
+            this.myCam.zoomTo(3, 2000);
             this.time.addEvent({
-                delay: 1000,
+                delay: 2000,
                 callback: this.gameOver,
                 callbackScope: this,
                 loop: false
@@ -626,6 +626,9 @@ export default class GameLvl2 extends Phaser.Scene
     }
     gameOver()
     {
+        this.music.stop();
+        this.scene.remove();
+
         this.scene.start('gameover', {level: 2});
     }
 }

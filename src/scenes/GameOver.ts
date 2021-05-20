@@ -1,4 +1,7 @@
 import Phaser from 'phaser'
+import GameLvl1 from './GameLvl1';
+import GameLvl2 from './GameLvl2';
+import GameLvl3 from './GameLvl3';
 
 export default class GameOver extends Phaser.Scene
 {
@@ -18,9 +21,11 @@ export default class GameOver extends Phaser.Scene
     }
     create()
     {
-        this.add.bitmapText(150,50, "pixelFont", "GAME OVER", 30);
-        this.add.bitmapText(150,120, "pixelFont", "Try again?", 30);
+        this.add.bitmapText(150,100, "pixelFont", "GAME OVER", 30);
 
+        var duckie = this.physics.add.sprite(80,20, 'duckie', 5);
+        duckie.body.gravity.y = 800;
+        duckie.body.setBounce(0,0.5);
 
         var sadSound = this.sound.add('sad'); 
 
@@ -28,6 +33,7 @@ export default class GameOver extends Phaser.Scene
         yesButton.setInteractive().setImmovable(true);
         yesButton.body.setSize(96,35);
 
+        var collider = this.physics.add.collider(duckie, yesButton, this.tryAgain, null, this);
 
         var noButton = this.add.sprite(280,200,'yesNoButton', 2);
         noButton.setInteractive();
@@ -45,19 +51,18 @@ export default class GameOver extends Phaser.Scene
             if(this.level == 1)
             {
                 this.scene.stop();
-                //this.scene.start('game1');
-                var theOtherScene = this.scene.get('game1');
-                theOtherScene.registry.destroy();
-                theOtherScene.events.off();
-                theOtherScene.scene.restart();
+                this.scene.add('game1', GameLvl1, true);
+                
             }
             else if(this.level ==2)
             {
-                this.scene.start('game2');
+                this.scene.stop();
+                this.scene.add('game2', GameLvl2, true);
             }
             else
             {
-                this.scene.start('game3');
+                this.scene.stop();
+                this.scene.add('game3', GameLvl3, true);
             }
             
         });
@@ -88,21 +93,12 @@ export default class GameOver extends Phaser.Scene
 
     endGame()
     {
-        if(this.level == 1)
-        { 
-            this.scene.stop('game1');
+        //Completely restart the game
+        this.sys.game.destroy(true);
 
-        }
-        else if(this.level ==2)
-        {
-            this.scene.stop('game2');
-        }
-        else
-        {
-            this.scene.stop('game3'); 
-        }
-        this.scene.stop();
-        this.scene.start('title');
+        var game = new Phaser.Game(config); //Need to get config from main.ts
+
+              
         
     }
 

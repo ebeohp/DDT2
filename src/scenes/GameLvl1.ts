@@ -599,8 +599,10 @@ export default class GameLvl1 extends Phaser.Scene
     gameOver()
     {
         this.music.stop();
+        this.scene.remove();
 
-        this.scene.launch('gameover', {level: 1});
+        this.scene.stop();
+        this.scene.start('gameover', {level: 1});
     }
     
 }
