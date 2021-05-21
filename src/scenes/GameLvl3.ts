@@ -60,7 +60,7 @@ export default class GameLvl3 extends Phaser.Scene
     private botGroup!: Phaser.Physics.Arcade.Group
     private bot1!: Phaser.Physics.Arcade.Sprite
     private numHearts = 3;
-    private numStars = 3;
+    private numStars = 0;
 
     private botCollider!: Phaser.Physics.Arcade.Collider
     private spacebar!: Phaser.Input.Keyboard.Key;
@@ -94,6 +94,9 @@ export default class GameLvl3 extends Phaser.Scene
     loseA: Phaser.Sound.BaseSound;
     hurtA: Phaser.Sound.BaseSound;
     plantedA: Phaser.Sound.BaseSound;
+    flag: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
+    flagCollider: Phaser.Physics.Arcade.Collider;
+    numTrees: number;
 
 
 	constructor()
@@ -121,6 +124,10 @@ export default class GameLvl3 extends Phaser.Scene
         
         var invisWall = this.physics.add.sprite(-40,440, 'trigger');
         invisWall.setImmovable();
+
+        this.flag = this.physics.add.sprite(750,400,'flag');
+        this.flag.setImmovable();
+        this.flag.play('red_flag');
 
         this.initialTime = 0;
         this.timeLabel = this.add.bitmapText(300,7, "pixelFont", "Time: ",16);
@@ -158,6 +165,7 @@ export default class GameLvl3 extends Phaser.Scene
 
         this.physics.add.collider(this.duckie, wallsLayer);
         this.physics.add.collider(this.duckie, invisWall);
+        this.flagCollider = this.physics.add.collider(this.duckie, this.flag, this.flagColor, null, this);
 
         //Graphics for lives system and groups hearts 
         this.heartGroup = this.physics.add.group();
@@ -169,6 +177,7 @@ export default class GameLvl3 extends Phaser.Scene
         this.heart3.setScrollFactor(0,0).setDepth(10);
         
         //Graphics for trees and groups all trees //Each tree has their own trigger
+        this.numTrees = 0;
         this.treeGroup = this.physics.add.group();
         var tree1 = this.treeGroup.create(120,230,'stump');
         tree1.body.setSize(20,20);
@@ -419,11 +428,11 @@ export default class GameLvl3 extends Phaser.Scene
             delay: 400,
             callback: this.starSound,
             callbackScope: this,
-            repeat: 5
+            repeat: 4
         });
         this.tweens.add({
             targets: star,
-            repeat: 5,
+            repeat: 4,
             x: player.x, //going to the duck
             y: player.y,
             ease: 'Linear',
@@ -468,6 +477,7 @@ export default class GameLvl3 extends Phaser.Scene
     {
         if(Phaser.Input.Keyboard.JustDown(this.spacebar))
         {
+            this.numTrees += 1;
             tree.setTexture('tree');
             tree.disableBody(true,false);
             this.plantedA.play();
@@ -592,5 +602,36 @@ export default class GameLvl3 extends Phaser.Scene
 
         this.scene.start('gameover', {level: 3});
 
+    }
+    flagColor()
+    {
+        this.flag.play('blue_flag');
+        this.flag.setDepth(5);
+        //Going to remove this collision body away so calls will stop after player has collided once
+        this.physics.world.removeCollider(this.flagCollider);
+        this.physics.add.collider(this.duckie, this.flag); //Add a new collider for small collider so duckie cant walk through flag
+
+        this.flag.body.setSize(10, 5);
+        this.flag.setOffset(12,38);
+        this.cameras.main.fadeOut(2000);
+
+        this.tweens.add({
+            targets:  this.music,
+            volume:   0,
+            duration: 2000
+        });
+        this.time.addEvent({
+            delay:2000,
+            callback: this.transition,
+            callbackScope: this,
+            loop: true
+        });
+    }
+    transition()
+    {
+        this.music.stop();
+        this.scene.stop();
+        this.scene.remove(); //In case if the player does not pass level and will need to
+        this.scene.start('transition3', {stars: this.numStars, trees: this.numTrees, timeTaken: this.timeFormat(this.initialTime)});
     }
 }

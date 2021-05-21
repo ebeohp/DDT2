@@ -5,27 +5,15 @@ import GameLvl3 from './GameLvl3';
 import Preloader from './Preloader';
 import Title from './Title';
 
-export default class Transition extends Phaser.Scene
+export default class WinGame extends Phaser.Scene
 {
-    level: any;
-    beep: boolean;
     constructor()
     {
-        super('transition')
+        super('winGame')
     }
-    init(data)
-    {
-        this.level = data.level;
-    }
-    preload()
-    {
-       
-    }
+
     create()
     {
         
     }
-
-    
-
 }

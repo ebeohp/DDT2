@@ -62,7 +62,7 @@ export default class GameLvl1 extends Phaser.Scene
     private botGroup!: Phaser.Physics.Arcade.Group
     private bot1!: Phaser.Physics.Arcade.Sprite
     private numHearts = 3;
-    private numStars = 3;
+    private numStars = 0;
 
     private botCollider!: Phaser.Physics.Arcade.Collider
     private spacebar!: Phaser.Input.Keyboard.Key;
@@ -95,6 +95,8 @@ export default class GameLvl1 extends Phaser.Scene
     plantedA: Phaser.Sound.BaseSound;
     flag: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
     flagCollider: Phaser.Physics.Arcade.Collider;
+
+    numTrees: integer;
 
 
 	constructor()
@@ -182,6 +184,7 @@ export default class GameLvl1 extends Phaser.Scene
         this.heart3.setScrollFactor(0,0).setDepth(10);
         
         //Graphics for trees and groups all trees //Each tree has their own trigger
+        this.numTrees = 0;
         this.treeGroup = this.physics.add.group();
         var tree1 = this.treeGroup.create(120,230,'stump');
         tree1.body.setSize(20,20);
@@ -432,11 +435,11 @@ export default class GameLvl1 extends Phaser.Scene
             delay: 400,
             callback: this.starSound,
             callbackScope: this,
-            repeat: 5
+            repeat: 4
         });
         this.tweens.add({
             targets: star,
-            repeat: 5,
+            repeat: 4,
             x: player.x, //going to the duck
             y: player.y,
             ease: 'Linear',
@@ -479,6 +482,7 @@ export default class GameLvl1 extends Phaser.Scene
     {
         if(Phaser.Input.Keyboard.JustDown(this.spacebar))
         {
+            this.numTrees += 1;
             tree.setTexture('tree').setDepth(5);
             tree.disableBody(true,false);
             this.plantedA.play();
@@ -598,9 +602,8 @@ export default class GameLvl1 extends Phaser.Scene
     gameOver()
     {
         this.music.stop();
-        this.scene.remove();
-
         this.scene.stop();
+        this.scene.remove();
         this.scene.start('gameover', {level: 1});
     }
     flagColor()
@@ -613,10 +616,26 @@ export default class GameLvl1 extends Phaser.Scene
 
         this.flag.body.setSize(10, 5);
         this.flag.setOffset(12,38);
+        this.cameras.main.fadeOut(2000);
+
+        this.tweens.add({
+            targets:  this.music,
+            volume:   0,
+            duration: 2000
+        });
+        this.time.addEvent({
+            delay:2000,
+            callback: this.transition,
+            callbackScope: this,
+            loop: true
+        });
     }
     transition()
     {
-
+        this.music.stop();
+        this.scene.stop();
+        this.scene.remove(); //In case if the player does not pass level and will need to
+        this.scene.start('transition1', {stars: this.numStars, trees: this.numTrees, timeTaken: this.timeFormat(this.initialTime)});
     }
     
 }
