@@ -1,4 +1,5 @@
 import Phaser from 'phaser'
+import { __assign } from 'tslib';
 import { textChangeRangeIsUnchanged } from 'typescript';
 
 class ListNode
@@ -58,7 +59,7 @@ export default class GameLvl3 extends Phaser.Scene
     private myCam!: Phaser.Cameras.Scene2D.Camera
 
     private botGroup!: Phaser.Physics.Arcade.Group
-    private bot1!: Phaser.Physics.Arcade.Sprite
+    private bot1!: any
     private numHearts = 3;
     private numStars = 0;
 
@@ -97,6 +98,11 @@ export default class GameLvl3 extends Phaser.Scene
     flag: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
     flagCollider: Phaser.Physics.Arcade.Collider;
     numTrees: number;
+    redButton: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
+    botNotif: Phaser.GameObjects.BitmapText;
+    redCollider: Phaser.Physics.Arcade.Collider;
+    botTimer1: Phaser.Time.TimerEvent;
+    botTimer2: Phaser.Time.TimerEvent;
 
 
 	constructor()
@@ -125,9 +131,12 @@ export default class GameLvl3 extends Phaser.Scene
         var invisWall = this.physics.add.sprite(-40,440, 'trigger');
         invisWall.setImmovable();
 
-        this.flag = this.physics.add.sprite(750,400,'flag');
+        this.flag = this.physics.add.sprite(380,130,'flag');
         this.flag.setImmovable();
         this.flag.play('red_flag');
+
+        this.redButton = this.physics.add.sprite(750,400, 'redButton', 0);
+        this.redButton.setImmovable();
 
         this.initialTime = 0;
         this.timeLabel = this.add.bitmapText(300,7, "pixelFont", "Time: ",16);
@@ -166,6 +175,7 @@ export default class GameLvl3 extends Phaser.Scene
         this.physics.add.collider(this.duckie, wallsLayer);
         this.physics.add.collider(this.duckie, invisWall);
         this.flagCollider = this.physics.add.collider(this.duckie, this.flag, this.flagColor, null, this);
+        this.redCollider = this.physics.add.collider(this.duckie, this.redButton, this.disableBots, null, this);
 
         //Graphics for lives system and groups hearts 
         this.heartGroup = this.physics.add.group();
@@ -302,6 +312,8 @@ export default class GameLvl3 extends Phaser.Scene
         this.bot5.setImmovable(true);
 
         this.botCollider = this.physics.add.collider(this.duckie, this.botGroup, this.hurtDuckie, null, this);
+        this.physics.add.collider(this.botGroup, wallsLayer);
+        this.physics.add.collider(this.botGroup, invisWall);
 
         //Queue creation for bot below
         this.velocities1 = new Queue();
@@ -312,13 +324,13 @@ export default class GameLvl3 extends Phaser.Scene
         this.velocities2.enqueue(200);
         this.velocities2.enqueue(-200);
         
-        this.time.addEvent({
+        this.botTimer1 = this.time.addEvent({
             delay: 1500,
             callback: this.move1,
             callbackScope: this,
             loop: true
         });
-        this.time.addEvent({
+        this.botTimer2 = this.time.addEvent({
             delay: 2000,
             callback: this.move2,
             callbackScope: this,
@@ -338,6 +350,51 @@ export default class GameLvl3 extends Phaser.Scene
         this.bot3.setVelocity(0,velocity);
         this.bot4.setVelocity(velocity,0);
         this.velocities2.enqueue(velocity);
+    }
+    disableBots()
+    {
+        console.log('button!');
+        this.redButton.play('red_button_press');
+        this.physics.world.removeCollider(this.redCollider);
+        this.botNotif = this.add.bitmapText(120,100, "pixelFont", "SYSTEM: ALL BOTS DISABLED",16);
+        this.botNotif.setScrollFactor(0,0);
+        this.botNotif.setAlpha(0);
+        this.tweens.add({
+            targets: this.botNotif,
+            alpha: { from: 0, to: 1 },
+            y: 80,
+            ease: 'Linear',
+            duration: 1000,
+            onComplete: function(){
+                this.time.addEvent({
+                    delay: 3000,
+                    callback: this.removeBotNotif,
+                    callbackScope: this
+                });
+            },
+            callbackScope: this
+        });  
+        
+        this.physics.world.removeCollider(this.botCollider);
+        this.physics.add.collider(this.duckie,this.botGroup);
+        this.botTimer1.remove(false);
+        this.botTimer2.remove(false);
+        this.bot1.setImmovable(false).anims.stop().setFrame(4);
+        this.bot2.setImmovable(false).anims.stop().setFrame(4);;
+        this.bot3.setImmovable(false).anims.stop().setFrame(4);
+        this.bot4.setImmovable(false).anims.stop().setFrame(4);
+        this.bot5.setImmovable(false).anims.stop().setFrame(4);
+    }
+    removeBotNotif()
+    {
+        this.tweens.add({
+            targets: this.botNotif,
+            alpha: { from: 1, to: 0},
+            y: 60,
+            ease: 'Linear',
+            duration: 1000,
+            callbackScope: this
+        }); 
     }
     openChest(duck, chest)
     {

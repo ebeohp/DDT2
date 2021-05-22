@@ -312,6 +312,8 @@ export default class GameLvl2 extends Phaser.Scene
         this.bot5.setImmovable(true);
 
         this.botCollider = this.physics.add.collider(this.duckie, this.botGroup, this.hurtDuckie, null, this);
+        this.physics.add.collider(this.duckie, wallsLayer);
+        this.physics.add.collider(this.duckie, invisWall);
 
         //Queue creation for bot below
         this.velocities1 = new Queue();
