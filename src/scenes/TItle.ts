@@ -18,8 +18,8 @@ export default class Preloader extends Phaser.Scene
     }
     create()
     {
-        //this.background = this.add.tileSprite(0,0, 400, 400, 'titlemap'); //TileSprite is different from images!
-        //this.background.setOrigin(0,0);
+        
+        this.text = this.add.bitmapText(120,20, "pixelFont", "[No Bot Collisions Version]", 16);
 
         var duckie = this.physics.add.sprite(20,20, 'duckie', 4);
         duckie.setCollideWorldBounds(true);

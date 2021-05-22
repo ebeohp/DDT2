@@ -314,7 +314,7 @@ export default class GameLvl1 extends Phaser.Scene
         this.bot3.anims.play('bot_move', true);
         this.bot3.setImmovable(true);
 
-        this.botCollider = this.physics.add.collider(this.duckie, this.botGroup, this.hurtDuckie, null, this);
+        //this.botCollider = this.physics.add.collider(this.duckie, this.botGroup, this.hurtDuckie, null, this);
         this.physics.add.collider(this.duckie, wallsLayer);
         this.physics.add.collider(this.duckie, invisWall);
 
