@@ -1,5 +1,3 @@
-![phaser3-parceljs-template](https://www.piskelapp.com/p/agxzfnBpc2tlbC1hcHByEwsSBlBpc2tlbBiAgODU0NHXCww/view)
-
 # Duck Duck Tree 2 No Bot Colliders Version
 > Dungeon Crawler version of my first Phaser game
 > For grading purposes only
