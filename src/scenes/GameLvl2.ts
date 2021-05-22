@@ -170,7 +170,7 @@ export default class GameLvl2 extends Phaser.Scene
         //80,680
         this.duckie = this.physics.add.sprite(80,680, 'duckie', 4);
         var name = this.add.bitmapText(15,7, "pixelFont", "DUCKIE", 16);
-        name.setScrollFactor(0,0).setDepth(5);
+        name.setScrollFactor(0,0).setDepth(20);
         this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.myCam = this.cameras.main.startFollow(this.duckie, true);
 
@@ -181,11 +181,11 @@ export default class GameLvl2 extends Phaser.Scene
         //Graphics for lives system and groups hearts 
         this.heartGroup = this.physics.add.group();
         this.heart1 = this.heartGroup.create(30, 30, "heart",0);
-        this.heart1.setScrollFactor(0,0).setDepth(10);
+        this.heart1.setScrollFactor(0,0).setDepth(20);
         this.heart2 = this.heartGroup.create(60, 30, "heart",0);
-        this.heart2.setScrollFactor(0,0).setDepth(10);
+        this.heart2.setScrollFactor(0,0).setDepth(20);
         this.heart3 = this.heartGroup.create(90, 30, "heart",0);
-        this.heart3.setScrollFactor(0,0).setDepth(10);
+        this.heart3.setScrollFactor(0,0).setDepth(20);
         
         //Graphics for trees and groups all trees //Each tree has their own trigger
         this.numTrees = 0;
@@ -236,8 +236,8 @@ export default class GameLvl2 extends Phaser.Scene
         this.numStars = 0; //Counts number collected in this level
         this.starText = this.add.bitmapText(150,7, "pixelFont", "       X 0", 14); //Text to tell user how many stars they counted
         var fakeStar = this.add.sprite(155,12,'star',1);
-        this.starText.setScrollFactor(0,0).setDepth(10);;
-        fakeStar.setScrollFactor(0,0).setDepth(10);;
+        this.starText.setScrollFactor(0,0).setDepth(20);;
+        fakeStar.setScrollFactor(0,0).setDepth(20);;
 
         this.starGroup = this.physics.add.group();
         var starCoord = 
@@ -389,7 +389,7 @@ export default class GameLvl2 extends Phaser.Scene
             chest.disableBody(true,false);
             duck.disableBody(true,false); //Dont allow movement while popup is on
             var window = this.add.image(chest.x,chest.y,'window');
-            window.setScale(0.1).setAlpha(0).setDepth(20);
+            window.setScale(0.1).setAlpha(0).setDepth(30);
 
             this.tweens.add({
                 targets: window,
@@ -412,10 +412,10 @@ export default class GameLvl2 extends Phaser.Scene
     displayFact(popup,player,chest)
     {
         var funFact = this.add.text(170,70, 'Fun Fact!', { font: '"Press Start 2P"', color: '#000000', align: 'center', wordWrap: { width: 200 } });
-        funFact.setDepth(20);
+        funFact.setDepth(40);
         funFact.setScrollFactor(0,0);
         var text = this.add.text(95,90, this.list.head.data, { font: '"Press Start 2P"', color: '#000000', align: 'center', wordWrap: { width: 200 } });
-        text.setDepth(20);
+        text.setDepth(40);
         text.setScrollFactor(0,0);
         this.list.removeHead();
         this.tweens.add({ //This tweens doesnt do anything except call to create a button after a seconds
@@ -433,7 +433,7 @@ export default class GameLvl2 extends Phaser.Scene
     giveExitButton(popup,player,text1,text2,chest) //To allow player to exit the popup
     {
         this.exitButton = this.physics.add.sprite(190,200,"closeButton");
-        this.exitButton.setInteractive().setScale(0.5).setDepth(20).setScrollFactor(0,0);
+        this.exitButton.setInteractive().setScale(0.5).setDepth(50).setScrollFactor(0,0);
         this.exitButton.on('pointerout', function (pointer) {
             this.exitButton.setFrame(0);
         }, this);
@@ -520,7 +520,7 @@ export default class GameLvl2 extends Phaser.Scene
             tree.setTexture('tree');
             tree.disableBody(true,false);
             this.plantedA.play();
-            tree.setDepth(15);
+            tree.setDepth(5);
             tree.setOrigin(0.5,0.66);
         }
     }

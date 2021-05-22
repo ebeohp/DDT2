@@ -251,7 +251,7 @@ export default class Preloader extends Phaser.Scene
             repeat: -1
         });
 
-        this.scene.start('title'); 
+        this.scene.start('game2'); 
     }
 
 }

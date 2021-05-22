@@ -88,7 +88,7 @@ export default class WinGame extends Phaser.Scene
             physics: { //Physics configuration for game
                 default: 'arcade', //Using arcade physics
                 arcade: {
-                    debug: true,
+                    debug: false,
                     gravity: { y: 0 } //No gravity for a top down game
                 }
             },
