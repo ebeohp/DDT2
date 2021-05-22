@@ -94,6 +94,18 @@ export default class Preloader extends Phaser.Scene
             frameWidth: 48,
             frameHeight: 48
         });
+        this.load.spritesheet('ella', 'decoration/ella.png', {
+            frameWidth: 32,
+            frameHeight: 32
+        });
+        this.load.spritesheet('monke', 'decoration/monke.png', {
+            frameWidth: 32,
+            frameHeight: 32
+        });
+        this.load.spritesheet('tiger', 'decoration/tiger.png', {
+            frameWidth: 32,
+            frameHeight: 32
+        });
 
         //Music and Sound Effects
         this.load.audio("titlemusic", "music/melodyMeadow.ogg");
@@ -103,6 +115,7 @@ export default class Preloader extends Phaser.Scene
         this.load.audio("lose", "music/lose.wav");
         this.load.audio("sad", "music/sadnoises.mp3");
         this.load.audio("planted", "music/planted.mp3");
+        this.load.audio("fanfare", "music/fanfare.mp3");
 
     }
     create()
@@ -219,7 +232,26 @@ export default class Preloader extends Phaser.Scene
             repeat: 0
         });
 
-        this.scene.start('game3'); 
+        this.anims.create({
+            key: "ella_dance",
+            frames: this.anims.generateFrameNames('ella'),
+            frameRate: 10,
+            repeat: -1
+        });
+        this.anims.create({
+            key: "tiger_dance",
+            frames: this.anims.generateFrameNames('tiger'),
+            frameRate: 10,
+            repeat: -1
+        });
+        this.anims.create({
+            key: "monke_dance",
+            frames: this.anims.generateFrameNames('monke'),
+            frameRate: 10,
+            repeat: -1
+        });
+
+        this.scene.start('title'); 
     }
 
 }

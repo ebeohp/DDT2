@@ -433,12 +433,12 @@ export default class GameLvl3 extends Phaser.Scene
         text.setDepth(20);
         text.setScrollFactor(0,0);
         this.list.removeHead();
-        this.tweens.add({ //This tweens doesnt do anything except call to create a button after 5 seconds
+        this.tweens.add({ //This tweens doesnt do anything except call to create a button after a seconds
             targets: text,
             alpha: { from: 1, to: 1 },
             repeat: 0,
             ease: 'Linear',
-            duration: 100, //3000
+            duration: 1000, 
             onComplete: function(){
                 this.giveExitButton(popup,player,funFact,text,chest); 
             },

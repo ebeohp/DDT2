@@ -163,7 +163,7 @@ export default class GameLvl1 extends Phaser.Scene
         this.plantedA = this.sound.add("planted");
         
         //100,100
-        this.duckie = this.physics.add.sprite(700,700, 'duckie', 4);
+        this.duckie = this.physics.add.sprite(100,100, 'duckie', 4);
         var name = this.add.bitmapText(15,7, "pixelFont", "DUCKIE", 16);
         name.setScrollFactor(0,0).setDepth(20);
         this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -386,12 +386,12 @@ export default class GameLvl1 extends Phaser.Scene
         text.setDepth(20);
         text.setScrollFactor(0,0);
         this.list.removeHead();
-        this.tweens.add({ //This tweens doesnt do anything except call to create a button after 3 seconds
+        this.tweens.add({ //This tweens doesnt do anything except call to create a button after second
             targets: text,
             alpha: { from: 1, to: 1 },
             repeat: 0,
             ease: 'Linear',
-            duration: 3000, //3000
+            duration: 1000, 
             onComplete: function(){
                 this.giveExitButton(popup,player,funFact,text,chest); 
             },

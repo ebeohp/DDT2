@@ -45,8 +45,6 @@ export default class Preloader extends Phaser.Scene
     }
     update()
     {
-        //this.background.tilePositionY-= 0.5;
-        //this.background.tilePositionX-= 0.5;
         if(Phaser.Input.Keyboard.JustDown(this.spacebar)){
             this.button.play('red_button_press');
             this.time.addEvent({
@@ -60,13 +58,7 @@ export default class Preloader extends Phaser.Scene
                 volume:   0,
                 duration: 1000
             });
-
-            
         }
-    }
-    howToPlay()
-    {
-
     }
     fade()
     {

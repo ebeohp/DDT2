@@ -1,9 +1,13 @@
 import Phaser from 'phaser'
-import GameLvl1 from './GameLvl1';
-import GameLvl2 from './GameLvl2';
-import GameLvl3 from './GameLvl3';
-import Preloader from './Preloader';
-import Title from './Title';
+import Preloader from './Preloader'
+import GameLvl1 from './GameLvl1'
+import GameLvl2 from './GameLvl2'
+import GameLvl3 from './GameLvl3'
+import Title from './Title'
+import Transition1 from './Transition1'
+import Transition2 from './Transition2'
+import Transition3 from './Transition3'
+import WinGame from './WinGame'
 
 export default class GameOver extends Phaser.Scene
 {
@@ -98,7 +102,7 @@ export default class GameOver extends Phaser.Scene
         //Completely restart the game
         this.sys.game.destroy(true);
 
-         new Phaser.Game({
+        new Phaser.Game({
 
             type: Phaser.AUTO,
             width: 400, //Width of game canvas
@@ -110,7 +114,7 @@ export default class GameOver extends Phaser.Scene
                     gravity: { y: 0 } //No gravity for a top down game
                 }
             },
-            scene: [Preloader, Title, GameLvl1, GameLvl2, GameLvl3, GameOver], //Has the scenes in order they should go
+            scene: [Preloader, Title, GameLvl1, GameLvl2, GameLvl3, Transition1, Transition2, Transition3, GameOver, WinGame], //Has the scenes in order they should go
             scale: {
                 zoom: 2 //Scales up all images 2 times
             }
