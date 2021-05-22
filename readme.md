@@ -59,7 +59,6 @@ npm run start
 Then go to specified address from terminal.
 
 # How to Play
-> Dungeon Crawler version of my first Phaser game
 Happy Tree Corp has been deforesting and it is up to Duckie to help save these trees! 
 -Dodge their patrol robots! (use up, down, left, and right arrow keys)
 -Collect stars!
@@ -69,3 +68,23 @@ Happy Tree Corp has been deforesting and it is up to Duckie to help save these t
 -Get to the end of the map where the blue flag is to complete level!
 
 Happy playing!
+
+# Credits
+>Tree Facts Sources:
+- https://www.savatree.com/tree-facts.html#:~:text=Trees%20are%20the%20longest%20living,make%20our%20landscapes%20look%20beautiful.
+- https://www.precisiontreemn.com/tips/14-fun-facts-about-trees.html
+- https://www.arborday.org/trees/treefacts/
+
+>Game Assets:
+- Dungeon Tileset II by 0x72- https://0x72.itch.io/dungeontileset-ii
+- Rougelike/RPG Pack by Kenney - https://www.kenney.nl/assets/roguelike-rpg-pack
+- Efference/Melody Meadow - Contains music ©2021 Joshua McLean (https://joshua-mclean.itch.io) 
+- Bit map font:
+- Black font: https://opengameart.org/content/tiny-font
+
+>Game sounds and music:
+
+Licensed under Creative Commons Attribution 4.0 International
+- Sound effects from Zapsplat.com
+- https://opengameart.org/content/spinning-heart-and-star-trinkets-items-collectables
+- https://opengameart.org/content/modified-32x32-treasure-chest
