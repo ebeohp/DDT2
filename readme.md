@@ -59,13 +59,13 @@ Then go to specified address from terminal.
 
 # How to Play
 Happy Tree Corp has been deforesting and it is up to Duckie to help save these trees! 
--Dodge their patrol robots! (use up, down, left, and right arrow keys)
--Collect stars!
--Open chests! (stand near chest + hit spacebar)
--Learn about trees! (use mouse pointer to close popup)
--Revive the trees! (stand near tree stump + hit spacebar)
--Get to the end of the map where the blue flag is to complete level!
-
+- Dodge their patrol robots! (use up, down, left, and right arrow keys)
+- Collect stars!
+- Open chests! (stand near chest + hit spacebar)
+- Learn about trees! (use mouse pointer to close popup)
+- Revive the trees! (stand near tree stump + hit spacebar)
+- Get to the end of the map where the blue flag is to complete level!
+ 
 Happy playing!
 
 # Credits
