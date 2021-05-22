@@ -273,7 +273,7 @@ export default class GameLvl3 extends Phaser.Scene
         chest1.setImmovable(true);
         var chest2 = this.chestGroup.create(400,40, 'chest', 0);
         chest2.setImmovable(true);
-        var chest3 = this.chestGroup.create(300,720, 'chest', 0);
+        var chest3 = this.chestGroup.create(280,720, 'chest', 0);
         chest3.setImmovable(true);
 
         this.chestCollider = this.physics.add.collider(this.duckie, this.chestGroup);
@@ -281,15 +281,15 @@ export default class GameLvl3 extends Phaser.Scene
         this.chestTrigGroup = this.physics.add.group(); //This is to set an invisible area around the tree to sense for space bar input that can fix the tree
         var cTrig1 = this.chestTrigGroup.create(30,40, 'trigger');
         var cTrig2 = this.chestTrigGroup.create(400,40, 'trigger');
-        var cTrig3 = this.chestTrigGroup.create(270,720, 'trigger');
+        var cTrig3 = this.chestTrigGroup.create(280,720, 'trigger');
 
         this.chestTrigger = this.physics.add.overlap(this.duckie, this.chestTrigGroup, this.openChest, null, this);
 
         //Linked list construction below with queue linking 
-        var node1 = new ListNode("Trees help save energy! \n Trees properly placed around buildings can reduce air conditioning needs by 30% \n and can save 20–50% in energy used for heating.", null)
-        var node2 = new ListNode("Trees help reduce climate change effects! \n In one year, an acre of mature trees absorbs the amount of CO2 produced by a car driven 26,000 miles.", null)
+        var node1 = new ListNode("Trees are able to communicate and defend themselves against attacking insects. \n They can also signal danger to other trees so they can start their own defense. ", null)
+        var node2 = new ListNode("Trees are the longest living organisms on Earth. \n Methuselah, an estimated 4,852-year-old ancient Bristlecone Pine, is one of the oldest living trees in the world", null)
         node1.next = node2;
-        var node3 = new ListNode("Trees help clean our drinking water! \n Forested watersheds provide quality drinking water to more than 180 million Americans.", null)
+        var node3 = new ListNode("Trees block noise by reducing sound waves. \n  Leaves, twigs, and branches on trees, shrubs, and herbaceous growth absorb and deflect sound waves to mask unwanted noise.", null)
         node2.next = node3;
 
         this.list = new LinkedList(node1);
