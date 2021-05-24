@@ -11,7 +11,8 @@ class ListNode
         this.next = null
     }
 }
-class LinkedList{
+class LinkedList
+{
     public head!: ListNode
     constructor(head = null)
     {
@@ -23,7 +24,8 @@ class LinkedList{
     }   
 }
 
-class Queue {
+class Queue 
+{
     private items: any
     private headIndex: integer;
     private tailIndex: integer;
@@ -138,7 +140,8 @@ export default class GameLvl1 extends Phaser.Scene
         this.timeLabel = this.add.bitmapText(300,7, "pixelFont", "Time: ",16);
         this.timeLabel.setScrollFactor(0,0).setDepth(20);
         this.timeLabel.text = "Time: " + this.timeFormat(this.initialTime);
-        var countDown = this.time.addEvent({
+        var countDown = this.time.addEvent
+        ({
             delay:1000,
             callback: this.onCount,
             callbackScope: this,
@@ -147,7 +150,8 @@ export default class GameLvl1 extends Phaser.Scene
         
         //Music added here
         this.music = this.sound.add("music");  
-        var musicConfig = { //optional
+        var musicConfig = 
+        { 
             mute: false,
             volume: 0.8,
             rate: 1,
@@ -322,13 +326,15 @@ export default class GameLvl1 extends Phaser.Scene
         this.velocities = new Queue();
         this.velocities.enqueue(-100);
         this.velocities.enqueue(100);
-        this.time.addEvent({
+        this.time.addEvent
+        ({
             delay: 1000,
             callback: this.move1,
             callbackScope: this,
             loop: true
         });
-        this.time.addEvent({
+        this.time.addEvent
+        ({
             delay: 2000,
             callback: this.move2,
             callbackScope: this,
@@ -359,7 +365,8 @@ export default class GameLvl1 extends Phaser.Scene
             var window = this.add.image(chest.x,chest.y,'window');
             window.setScale(0.1).setAlpha(0).setDepth(30);
 
-            this.tweens.add({
+            this.tweens.add
+            ({
                 targets: window,
                 alpha: { from: 0, to: 1 },
                 repeat: 0,
@@ -369,7 +376,8 @@ export default class GameLvl1 extends Phaser.Scene
                 scaleY: 0.5,
                 ease: 'Linear',
                 duration: 400,
-                onComplete: function(){
+                onComplete: function()
+                {
                     this.displayFact(window,duck,chest);
                 },
                 callbackScope: this
@@ -392,7 +400,8 @@ export default class GameLvl1 extends Phaser.Scene
             repeat: 0,
             ease: 'Linear',
             duration: 1000, 
-            onComplete: function(){
+            onComplete: function()
+            {
                 this.giveExitButton(popup,player,funFact,text,chest); 
             },
             callbackScope: this
@@ -402,18 +411,22 @@ export default class GameLvl1 extends Phaser.Scene
     {
         this.exitButton = this.physics.add.sprite(190,200,"closeButton");
         this.exitButton.setInteractive().setScale(0.5).setDepth(50).setScrollFactor(0,0);
-        this.exitButton.on('pointerout', function (pointer) {
+        this.exitButton.on('pointerout', function (pointer) 
+        {
             this.exitButton.setFrame(0);
         }, this);
-        this.exitButton.on('pointerover', function (pointer) {
+        this.exitButton.on('pointerover', function (pointer) 
+        {
             this.exitButton.play('close_button_shine');
         }, this);
-        this.exitButton.on('pointerup', function (pointer) {
+        this.exitButton.on('pointerup', function (pointer) 
+        {
             popup.destroy(true);
             text1.destroy(true);
             text2.destroy(true);
             this.exitButton.destroy(true);
-            this.tweens.add({
+            this.tweens.add
+            ({
                 targets: popup,
                 alpha: { from: 1, to: 0 },
                 repeat: 0,
@@ -421,7 +434,8 @@ export default class GameLvl1 extends Phaser.Scene
                 scaleY: 0,
                 ease: 'Linear',
                 duration: 200,
-                onComplete: function(){ 
+                onComplete: function()
+                { 
                     this.giveStars(player,chest);
                 },
                 callbackScope: this
@@ -433,13 +447,15 @@ export default class GameLvl1 extends Phaser.Scene
         var star = this.starGroup.create(chest.x,chest.y, 'star'); //Starting for the chest
         star.disableBody(true,false);
         star.setFrame(1);
-        this.time.addEvent({
+        this.time.addEvent
+        ({
             delay: 400,
             callback: this.starSound,
             callbackScope: this,
             repeat: 4
         });
-        this.tweens.add({
+        this.tweens.add
+        ({
             targets: star,
             repeat: 4,
             x: player.x, //going to the duck
@@ -473,7 +489,8 @@ export default class GameLvl1 extends Phaser.Scene
             y: '-=100',
             ease: 'Linear',
             duration: 1000,
-            onComplete: function(){
+            onComplete: function()
+            {
                 this.numStars += 1;
                 console.log("Collected!");
                 star.disableBody(true,true);
@@ -494,7 +511,8 @@ export default class GameLvl1 extends Phaser.Scene
     }
     hurtDuckie(duck,bot)
     {
-        var hurtConfig = { //optional
+        var hurtConfig = 
+        { 
             mute: false,
             volume: 1.5,
             rate: 1,
@@ -507,7 +525,8 @@ export default class GameLvl1 extends Phaser.Scene
 
         duck.setPosition(100,100); //Respawn at start
     
-        var tween = this.tweens.add({ //Tweens for flickering effect when respawning
+        var tween = this.tweens.add
+        ({ //Tweens for flickering effect when respawning
             targets: duck,
             alpha: 0,
             ease: "Power1",
@@ -538,7 +557,8 @@ export default class GameLvl1 extends Phaser.Scene
             this.heart1.setFrame(1);
             once+=1;
             this.myCam.zoomTo(3, 2000);
-            this.time.addEvent({
+            this.time.addEvent
+            ({
                 delay: 2000,
                 callback: this.gameOver,
                 callbackScope: this,
@@ -547,13 +567,15 @@ export default class GameLvl1 extends Phaser.Scene
         }
     
     }  
-    timeFormat(seconds){
+    timeFormat(seconds)
+    {
         var minutes = Math.floor(seconds/60);
         var partInSeconds = seconds%60;
         partInSeconds = partInSeconds.toString().padStart(2,"0");
         return `${minutes}:${partInSeconds}`;
     }
-    onCount(){
+    onCount()
+    {
         this.initialTime += 1;
         this.timeLabel.text = "Time: " + this.timeFormat(this.initialTime);
     }
@@ -620,12 +642,14 @@ export default class GameLvl1 extends Phaser.Scene
         this.flag.setOffset(12,38);
         this.cameras.main.fadeOut(2000);
 
-        this.tweens.add({
+        this.tweens.add
+        ({
             targets:  this.music,
             volume:   0,
             duration: 2000
         });
-        this.time.addEvent({
+        this.time.addEvent
+        ({
             delay:2000,
             callback: this.transition,
             callbackScope: this,

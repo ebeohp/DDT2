@@ -142,7 +142,8 @@ export default class GameLvl3 extends Phaser.Scene
         this.timeLabel = this.add.bitmapText(300,7, "pixelFont", "Time: ",16);
         this.timeLabel.setScrollFactor(0,0).setDepth(20);
         this.timeLabel.text = "Time: " + this.timeFormat(this.initialTime);
-        var countDown = this.time.addEvent({
+        var countDown = this.time.addEvent
+        ({
             delay:1000,
             callback: this.onCount,
             callbackScope: this,
@@ -150,7 +151,8 @@ export default class GameLvl3 extends Phaser.Scene
         });
         
         this.music = this.sound.add("music");  
-        var musicConfig = { //optional
+        var musicConfig = 
+        { //optional
             mute: false,
             volume: 0.8,
             rate: 1,
@@ -324,13 +326,15 @@ export default class GameLvl3 extends Phaser.Scene
         this.velocities2.enqueue(200);
         this.velocities2.enqueue(-200);
         
-        this.botTimer1 = this.time.addEvent({
+        this.botTimer1 = this.time.addEvent
+        ({
             delay: 1500,
             callback: this.move1,
             callbackScope: this,
             loop: true
         });
-        this.botTimer2 = this.time.addEvent({
+        this.botTimer2 = this.time.addEvent
+        ({
             delay: 2000,
             callback: this.move2,
             callbackScope: this,
@@ -359,14 +363,16 @@ export default class GameLvl3 extends Phaser.Scene
         this.botNotif = this.add.bitmapText(120,100, "pixelFont", "SYSTEM: ALL BOTS DISABLED",16);
         this.botNotif.setScrollFactor(0,0);
         this.botNotif.setAlpha(0);
-        this.tweens.add({
+        this.tweens.add
+        ({
             targets: this.botNotif,
             alpha: { from: 0, to: 1 },
             y: 80,
             ease: 'Linear',
             duration: 1000,
             onComplete: function(){
-                this.time.addEvent({
+                this.time.addEvent
+                ({
                     delay: 3000,
                     callback: this.removeBotNotif,
                     callbackScope: this
@@ -387,7 +393,8 @@ export default class GameLvl3 extends Phaser.Scene
     }
     removeBotNotif()
     {
-        this.tweens.add({
+        this.tweens.add
+        ({
             targets: this.botNotif,
             alpha: { from: 1, to: 0},
             y: 60,
@@ -406,7 +413,8 @@ export default class GameLvl3 extends Phaser.Scene
             var window = this.add.image(chest.x,chest.y,'window');
             window.setScale(0.1).setAlpha(0).setDepth(30);
 
-            this.tweens.add({
+            this.tweens.add
+            ({
                 targets: window,
                 alpha: { from: 0, to: 1 },
                 repeat: 0,
@@ -416,7 +424,8 @@ export default class GameLvl3 extends Phaser.Scene
                 scaleY: 0.5,
                 ease: 'Linear',
                 duration: 400,
-                onComplete: function(){
+                onComplete: function()
+                {
                     this.displayFact(window,duck,chest);
                 },
                 callbackScope: this
@@ -439,7 +448,8 @@ export default class GameLvl3 extends Phaser.Scene
             repeat: 0,
             ease: 'Linear',
             duration: 1000, 
-            onComplete: function(){
+            onComplete: function()
+            {
                 this.giveExitButton(popup,player,funFact,text,chest); 
             },
             callbackScope: this
@@ -449,13 +459,16 @@ export default class GameLvl3 extends Phaser.Scene
     {
         this.exitButton = this.physics.add.sprite(190,200,"closeButton");
         this.exitButton.setInteractive().setScale(0.5).setDepth(50).setScrollFactor(0,0);
-        this.exitButton.on('pointerout', function (pointer) {
+        this.exitButton.on('pointerout', function (pointer) 
+        {
             this.exitButton.setFrame(0);
         }, this);
-        this.exitButton.on('pointerover', function (pointer) {
+        this.exitButton.on('pointerover', function (pointer) 
+        {
             this.exitButton.play('close_button_shine');
         }, this);
-        this.exitButton.on('pointerup', function (pointer) {
+        this.exitButton.on('pointerup', function (pointer) 
+        {
             popup.destroy(true);
             text1.destroy(true);
             text2.destroy(true);
@@ -468,7 +481,8 @@ export default class GameLvl3 extends Phaser.Scene
                 scaleY: 0,
                 ease: 'Linear',
                 duration: 200,
-                onComplete: function(){ 
+                onComplete: function()
+                { 
                     this.giveStars(player,chest);
                 },
                 callbackScope: this
@@ -481,20 +495,23 @@ export default class GameLvl3 extends Phaser.Scene
         //star.disableBody(true,false);
         star.setFrame(1);
 
-        this.time.addEvent({
+        this.time.addEvent
+        ({
             delay: 400,
             callback: this.starSound,
             callbackScope: this,
             repeat: 4
         });
-        this.tweens.add({
+        this.tweens.add
+        ({
             targets: star,
             repeat: 4,
             x: player.x, //going to the duck
             y: player.y,
             ease: 'Linear',
             duration: 400,
-            onComplete: function(){
+            onComplete: function()
+            {
                 
                 player.enableBody(false, 0, 0, true, true); //Allow player to move again and enable physics body
                 star.disableBody(true,true);
@@ -516,14 +533,16 @@ export default class GameLvl3 extends Phaser.Scene
         this.numStars += 1;
         this.starText.text = "       X " + this.numStars;
 
-        this.tweens.add({
+        this.tweens.add
+        ({
             targets: star,
             alpha: { from: 1, to: 0 },
             repeat: 0,
             y: '-=100',
             ease: 'Linear',
             duration: 1000,
-            onComplete: function(){
+            onComplete: function()
+            {
                 this.numStars += 1;
                 console.log("Collected!");
                 star.disableBody(true,true);
@@ -544,7 +563,8 @@ export default class GameLvl3 extends Phaser.Scene
     }
     hurtDuckie(duck,bot)
     {
-        var hurtConfig = { //optional
+        var hurtConfig = 
+        { //optional
             mute: false,
             volume: 1.5,
             rate: 1,
@@ -557,13 +577,15 @@ export default class GameLvl3 extends Phaser.Scene
 
         duck.setPosition(80,435); //Respawn at start
     
-        var tween = this.tweens.add({ //Tweens for flickering effect when respawning
+        var tween = this.tweens.add
+        ({ //Tweens for flickering effect when respawning
             targets: duck,
             alpha: 0,
             ease: "Power1",
             duration: 100,
             repeat: 3,
-            onComplete: function(){
+            onComplete: function()
+            {
                 duck.alpha = 1;
             },
             callbackScope: this

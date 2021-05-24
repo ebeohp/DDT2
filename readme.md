@@ -63,7 +63,8 @@ Happy Tree Corp has been deforesting and it is up to Duckie to help save these t
 - Open chests! (stand near chest + hit spacebar)
 - Learn about trees! (use mouse pointer to close popup)
 - Revive the trees! (stand near tree stump + hit spacebar)
-- Get to the end of the map where the blue flag is to complete level!
+- Use mouse cursor to interact with white buttons!
+- Get to the end of the map where the flag is to complete level!
 
 Happy playing!
 
