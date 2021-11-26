@@ -6,6 +6,10 @@
 
 ## Prerequisites
 
+(Direct link) (https://stoic-knuth-8ca0be.netlify.app/)
+
+(To play locally)
+
 You'll need [Node.js](https://nodejs.org/en/), [npm](https://www.npmjs.com/), and [Parcel](https://parceljs.org/) installed.
 
 It is highly recommended to use [Node Version Manager](https://github.com/nvm-sh/nvm) (nvm) to install Node.js and npm.
