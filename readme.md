@@ -4,7 +4,9 @@
 
 ![License](https://img.shields.io/badge/license-MIT-green)
 
-## Prerequisites
+## Prerequisites 
+
+Computer game only.
 
 (Direct link) (https://stoic-knuth-8ca0be.netlify.app/)
 
